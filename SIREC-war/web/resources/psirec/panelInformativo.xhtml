@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <composite:attribute name="ancho" default="200"/>
+        <composite:attribute name="background" default="#000000"/>
+        <composite:attribute name="titulo" required="true"/>
+        <composite:attribute name="colorTitulo" default="#000000"/>
+        <composite:attribute name="tamanioTitulo" default="14"/>
+        <composite:attribute name="texto" required="true"/>
+        <composite:attribute name="colorTexto" default="#000000"/>
+        <composite:attribute name="tamanioTexto" default="12"/>
+        <composite:attribute name="icono" default="fa-circle"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <center>
+        <h:panelGrid id="pnl#{cc.attrs.id}" width="#{cc.attrs.ancho}">
+            <p:panel style="background: #{cc.attrs.background};">
+                <h:panelGrid columns="3">
+                    <h:outputText value="" 
+                               style="color: #{cc.attrs.colorTitulo};font-size: #{cc.attrs.tamanioTitulo}px;" 
+                               styleClass="ui-icon fa #{cc.attrs.icono}"/>
+                    <h:panelGrid width="5"/>
+                    <p:outputLabel value="#{cc.attrs.titulo}" 
+                               style="font-size: #{cc.attrs.tamanioTitulo}px;color: #{cc.attrs.colorTitulo};font-family: Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif;"/>
+                </h:panelGrid>
+                <br/><p:outputLabel value="#{cc.attrs.texto}" style="font-size: #{cc.attrs.tamanioTexto}px;color: #{cc.attrs.colorTexto};font-family: Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif;" escape="false"/>
+            </p:panel>
+        </h:panelGrid>
+            </center>
+    </cc:implementation>
+</html>

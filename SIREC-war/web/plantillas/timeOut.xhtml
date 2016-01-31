@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      >
+    <ui:composition>
+        <c:if test="${param.redirected == true}">
+            <p:dialog header="Sesión Caducada" widgetVar="sessionTimeOutDialog"
+                      modal="true"  closable="false" width="400" visible="true">
+                <h:form>
+                    <p:panelGrid columns="1" styleClass="panelgrid-sin-bordes">
+                        <h:outputText value="Su Sesión ha caducado favor pulse sobre el botón para volver a acceder a la aplicación" />
+
+                        <p:commandButton id="commandButtonRegresarHome_3" 
+                                         value="Regresar"
+                                         onclick="javascript:function(){document.location=#{navegacionControlador.contextName}}" />
+                    </p:panelGrid>
+                </h:form>
+            </p:dialog>
+        </c:if>
+    </ui:composition>
+</html>

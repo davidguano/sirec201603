@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:psirec="http://java.sun.com/jsf/composite/psirec">
+
+    <!--DETERMINACION 1.5 X 1000-->
+    <h:panelGrid>
+        <center>
+            <h:panelGrid id="pnlConPatPorMil" width="1000" columns="1" >
+                <p:panel>
+                    <center>
+                        <h:panelGrid id="pnl15xMiDeterBuscaPatente" columns="1">
+                            <p:panel rendered="#{gestionDetPatenteUnoCincoporMilControlador.verBuscaPatente==1}" header="Búsqueda de Patente:">
+                                <h:panelGrid columns="4">
+                                    <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_ingre_valor_busca} AE-MPM-"/>
+                                    <p:inputText  id="txtExo15xMilDeterPatente"  value="#{gestionDetPatenteUnoCincoporMilControlador.buscNumPat}" 
+                                                  maxlength="20" size="40"/>
+                                    <p:message for="txtExo15xMilDeterPatente" display="icon"/>
+                                    <p:commandButton value="#{txt.btn_aceptar}" 
+                                                     id="btn15xMilDeterBuscaPatente" 
+                                                     action="#{gestionDetPatenteUnoCincoporMilControlador.cagarPatenteActual()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this,pnl15xMiDeterBuscaPatente" 
+                                                     update=":frmPat:tabPrin:pnlCon15xMilDetMulNumPat,:frmPat:tabPrin:"
+                                                     async="true"
+                                                     global="false"
+                                                     />            
+                                </h:panelGrid>
+                            </p:panel>
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{txt.btn_buscar}" 
+                                                 id="btn15xMilDeterBusPat" 
+                                                 action="#{gestionDetPatenteUnoCincoporMilControlador.buscarPatente()}" 
+                                                 icon="ui-icon-disk"  
+                                                 process="@this,pnl15xMiDeterBuscaPatente" 
+                                                 update=":frmPat,pnl15xMiDeterBuscaPatente"
+                                                 async="true"
+                                                 global="false"
+                                                 />  
+                                <p:commandButton value="#{txt.btn_nuevo}" 
+                                                 id="btnNue15xMilDeter" 
+                                                 action="#{gestionDetPatenteUnoCincoporMilControlador.inicializar()}" 
+                                                 icon="ui-icon-disk"  
+                                                 process="@this,pnl15xMiDeterBuscaPatente" 
+                                                 update=":frmPat,pnl15xMiDeterBuscaPatente"
+                                                 async="true"
+                                                 global="false"
+                                                 />                        
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </center>
+                </p:panel>
+                <p:panel header="#{txt.lbl_header_det_pat_por_mil}">
+                    <h:panelGrid columns="2">
+                        <p:commandButton process="@this" action="#{gestionDetPatenteUnoCincoporMilControlador.cargarNumPatente()}" value="Ver N° Patente:" update=":frmPat:tabPrin:pnlCon15xMilDetMulNumPat"/>
+                        <p:panel>
+                            <h:panelGrid columns="4" id="pnlCon15xMilDetMulNumPat">
+                                <p:outputLabel style="font-size: #{txt.font_size};" value="#{txt.lbl_num_patente}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" id="txtPatente15xMilDetMul" value="#{gestionDetPatenteUnoCincoporMilControlador.numPatente}"  
+                                             size="40"/>
+                                <p:message for="txtPatente15xMilDetMul" display="icon"/>  
+                                <psirec:panelInformativo  rendered="#{gestionDetPatenteUnoCincoporMilControlador.numPatente==null}" id="inf15xMilDeterNumPat" background="#042B69" ancho="220" icono="fa-exclamation-triangle"
+                                                          titulo="#{txt.lbl_head_error_patente}" tamanioTitulo="15" colorTitulo="white"
+                                                          texto="#{txt.lbl_error_num_patente}" tamanioTexto="12" colorTexto="white"/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="#{txt.btn_anadir_periodo}" 
+                                         id="btnAnPeriodoPag4" 
+                                         action="#{gestionDetPatenteUnoCincoporMilControlador.activaPanelDetalleImpuestos()}" 
+                                         icon="ui-icon-disk"  
+                                         process="@this,pnlConPatPorMil" 
+                                         update=":frmPat:tabPrin:pnlConPatPorMil"
+                                         async="true"
+                                         global="false"
+                                         />
+                        <p:commandButton value="#{txt.btn_limpiar}" 
+                                         id="btnLimpiarPat15PorMilDet" 
+                                         action="#{gestionDetPatenteUnoCincoporMilControlador.limpiaPanelDetalleImpuestos()}" 
+                                         icon="ui-icon-disk"  
+                                         process="@this" 
+                                         update=":frmPat:tabPrin:pnlConDetImp15PorMil1,:frmPat:tabPrin:pnlConDetImp15PorMil2,:frmPat:tabPrin:pnlConDetImp15PorMil3,:frmPat:tabPrin:pnlConDetImp15PorMil4,:frmPat:tabPrin:pnlConCalculos15xMilDet,:frmPat:tabPrin:pnlConCalculos15xMilDet1"
+                                         async="true"
+                                         global="false"
+                                         />
+                    </h:panelGrid>
+                    <h:panelGrid id="pnlConDetValDetPorMil">
+                        <h:panelGrid rendered="#{gestionDetPatenteUnoCincoporMilControlador.verPanelDetalleImp==1}">
+                            <h:panelGrid columns="6" id="pnlContieDetImpuestos15PorMil">
+                                <h:panelGrid columns="1">    
+                                    <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_anio_balance}"/>
+                                    <p:selectOneMenu requiredMessage="#{txt.lbl_anio_balance} Se necesita un valor"   required="true" id="cmbAnioBalance" 
+                                                     value="#{gestionDetPatenteUnoCincoporMilControlador.catDetAnioBalance}" style="width:250px"
+                                                     converter="#{catalogoDetalleConverter}" var="t">
+                                        <f:selectItem  itemLabel="Seleccione..." itemValue="" /> 
+                                        <f:selectItems var="tipTem"  
+                                                       value="#{gestionDetPatenteUnoCincoporMilControlador.listAnios}" 
+                                                       itemLabel="#{tipTem.catdetTexto}" 
+                                                       itemValue="#{tipTem}"/> 
+                                        <p:column width="200" style="white-space: normal">  
+                                            <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                        </p:column> 
+                                    </p:selectOneMenu>                               
+                                    <p:message for="cmbAnioBalance" display="icon"/>
+                                </h:panelGrid>
+
+
+
+
+                                <h:panelGrid columns="1">    
+                                    <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_anio_declaracion}"/>
+                                    <p:selectOneMenu requiredMessage="#{txt.lbl_anio_declaracion} Se necesita un valor"   required="true" id="cmbAclaraAnio" 
+                                                     value="#{gestionDetPatenteUnoCincoporMilControlador.catDetAnioDeclara}" style="width:250px"
+                                                     converter="#{catalogoDetalleConverter}" var="t">
+                                        <f:selectItem  itemLabel="Seleccione..." itemValue="" /> 
+                                        <f:selectItems var="tipTem"  
+                                                       value="#{gestionDetPatenteUnoCincoporMilControlador.listAnios}" 
+                                                       itemLabel="#{tipTem.catdetTexto}" 
+                                                       itemValue="#{tipTem}"/> 
+                                        <p:column width="200" style="white-space: normal">  
+                                            <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                        </p:column> 
+                                    </p:selectOneMenu>                               
+                                    <p:message for="cmbAclaraAnio" display="icon"/>
+                                </h:panelGrid> 
+                            </h:panelGrid>
+
+
+
+
+                            <h:panelGrid columns="6" id="pnlConDetImp15PorMil1">
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_ingre_total_anual}"/>
+                                <p:inputText requiredMessage="#{txt.lbl_ingre_total_anual} Se nesecita un valor"  id="txtIngTAnual"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valIngresoAnual}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtIngTAnual" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_num_sucursales}"/>
+                                <p:inputText requiredMessage="#{txt.lbl_num_sucursales} Se nesecita un valor"  id="txtNSuc"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valNumSucursales}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtNSuc" display="icon"/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="3" id="pnlConDetImp15PorMil2">
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_total_activos}"/>
+                                <p:inputText requiredMessage="#{txt.lbl_total_activos} Se nesecita un valor" id="txtIngTActivos"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valActivos}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtIngTActivos"/>
+                            </h:panelGrid>  
+                            <h:panelGrid columns="6" id="pnlConDetImp15PorMil3">
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_pasivo_corriente}"/>
+                                <p:inputText requiredMessage="#{txt.lbl_pasivo_corriente} Se nesecita un valor"  id="txtPasCorr"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valPasivosCorriente}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtPasCorr" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_pasivo_contingente}"/>
+                                <p:inputText  requiredMessage="#{txt.lbl_pasivo_contingente} Se nesecita un valor"  id="txtPasCon"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valPasivosConting}" 
+                                              maxlength="20" size="40"/>
+                                <p:message for="txtPasCon" display="icon"/>
+                            </h:panelGrid> 
+                            <h:panelGrid columns="3" id="pnlConDetImp15PorMil4">
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_otras_deduc}"/>
+                                <p:inputText  requiredMessage="#{txt.lbl_otras_deduc} Se nesecita un valor"  id="txtOtrDeduc"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valOtrasDeducciones}" 
+                                              maxlength="20" size="40"/>
+                                <p:message for="txtOtrDeduc" display="icon"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{txt.btn_calcula}" 
+                                                 id="btnCalculaPag4" 
+                                                 action="#{gestionDetPatenteUnoCincoporMilControlador.calcularBaseImponible()}" 
+                                                 icon="ui-icon-disk"  
+                                                 process="@this,pnlConPatPorMil" 
+                                                 update=":frmPat:tabPrin:pnlConCalculos15xMilDet,pnlConCalculos15xMilDet1"
+                                                 async="true"
+                                                 global="false"
+                                                 />
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="6" id="pnlConCalculos15xMilDet">
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_base_imponible}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold"  disabled="true" id="txtBaseImp"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valBaseImponible}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtBaseImp" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_recargos}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" id="txtRec"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valRecargos}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtRec" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_impuesto}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold"  disabled="true" id="txtImp"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valImpuesto}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtImp" display="icon"/>
+                            </h:panelGrid>
+                            <h:panelGrid id="pnlConCalculos15xMilDet1">
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_tasa_procesamiento}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" id="txtTasPro"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valTasaProc}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtTasPro" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_subtotal}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" id="txtSub"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valSubtotal}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtSub" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_total}"/>
+                                <p:inputText style="background: lightgreen;color:black;font-weight: bold"  disabled="true" id="txtTot"  value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valTotal}" 
+                                             maxlength="20" size="40"/>
+                                <p:message for="txtTot" display="icon"/>
+
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{txt.btn_guardar}" 
+                                                 id="btnGuardarPag4" 
+                                                 action="#{gestionDetPatenteUnoCincoporMilControlador.guardaPatenteDet15xMil()}" 
+                                                 icon="ui-icon-disk"  
+                                                 process="@this,pnlConPatPorMil" 
+                                                 update=":frmPat:tabPrin:pnlConPatPorMil,frmPat:msgs"
+                                                 async="true"
+                                                 global="false"
+                                                 />
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                </p:panel>
+            </h:panelGrid>                      
+        </center>
+    </h:panelGrid>
+
+</html>

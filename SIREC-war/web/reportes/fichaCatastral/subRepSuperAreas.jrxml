@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRepSuperAreas" language="groovy" pageWidth="142" pageHeight="600" columnWidth="142" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e8ad7ba4-0bd9-4033-90a2-76081fbae47b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="catpreCodigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select catpreare_bloque as bloque, catpreare_area as area,catpreare_piso as piso
+from sirec.catastro_predial_areas
+where catpre_codigo=$P{catpreCodigo}]]>
+	</queryString>
+	<field name="bloque" class="java.lang.Integer"/>
+	<field name="area" class="java.lang.Double"/>
+	<field name="piso" class="java.lang.Integer"/>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="5" y="1" width="47" height="13" uuid="4db922dd-4562-49cb-a80b-52c10b3d3f8d"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Bloque/Piso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="56" y="1" width="85" height="13" uuid="b8592101-e576-4548-8584-ad4ac4d296c3"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Area]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="1" width="52" height="13" uuid="3b74bcb7-5087-4659-996c-c8b4634b3c8f"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="53" y="1" width="88" height="14" uuid="60691e7f-e291-453a-a142-508b4cdbf32a"/>
+			</rectangle>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="24" height="13" uuid="d1297612-be50-4335-a3a2-a33cd05ca243"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{bloque}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="63" y="0" width="40" height="13" uuid="9dc41b51-ee51-4e72-ba3b-2b2d87a24932"/>
+				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="104" y="0" width="28" height="13" uuid="97342b36-a5f6-4760-b4e6-92ad70d14d6e"/>
+				<text><![CDATA[(m2)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="28" height="14" uuid="04c545c9-5cd8-420c-bb35-1e95a8a19fb8"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="53" y="0" width="88" height="14" uuid="5534c8fa-07dd-425a-bf56-f20b292ee037"/>
+			</rectangle>
+			<textField>
+				<reportElement x="28" y="0" width="24" height="14" uuid="7cdaa528-3a76-436a-a385-513141cf1896"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{piso}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="28" y="0" width="24" height="14" uuid="a32c85a1-c8bc-4227-bad1-1a6fda5d6e40"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

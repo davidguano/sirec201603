@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <ui:composition>
+       <p:dialog header="Usuario sin Logear" widgetVar="sessionTimeOutDialog"
+                  modal="true"  closable="false" width="400" visible="#{navegacionControlador.usuarioActual.usuIdentificacion == null}" 
+                  rendered="#{navegacionControlador.usuarioActual.usuIdentificacion == null}">
+            <h:form>
+                <p:panelGrid columns="1" style="font-size: 10px">
+                    <h:outputText value="Usted no se ha logueado favor pulse sobre el botón para volver a acceder a la aplicación" />
+
+                    <p:commandButton id="commandButtonRegresarHome_3" 
+                                     value="Regresar"
+                                     action="#{navegacionControlador.cerrarSesion()}" />
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

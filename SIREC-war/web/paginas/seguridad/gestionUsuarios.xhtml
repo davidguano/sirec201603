@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <h:form id="frmGestionUsuario">   
+                <p:growl id="msgs" showDetail="true"/>
+                <!-- Listado de referencias -->
+                <center>
+
+                    <h:panelGrid id="panelContieneUsuForms" width="1000" columns="1" >
+                        <p:panel header="#{txt.lbl_administra_usu}">
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="#{txt.text_ident}"/>
+                                <p:inputText  id="usuIdent" value="#{gestionUsuarioControlador.usuarioActual.usuIdentificacion}"  
+                                              maxlength="13" disabled="#{gestionUsuarioControlador.habilitaEdicion}"   size="40" required="true"
+                                              />
+                                <p:message for="usuIdent"/>
+                                <p:outputLabel value="#{txt.text_nom}"/>
+                                <p:inputText onkeyup="value = value.toUpperCase()" id="usuNom" value="#{gestionUsuarioControlador.usuarioActual.usuNombres}"  
+                                             maxlength="50" size="40" required="true" />
+                                <p:message for="usuNom"/>
+                                <p:outputLabel value="#{txt.text_ape}"/>
+                                <p:inputText onkeyup="value = value.toUpperCase()"  id="usuApe"  value="#{gestionUsuarioControlador.usuarioActual.usuApellidos}" 
+                                             maxlength="50" size="40"/>
+                                <p:message for="usuApe"/>
+                                <p:outputLabel  value="#{txt.text_nom_usu}"/>
+                                <p:inputText     size="40" id="usuNomUsu" value="#{gestionUsuarioControlador.usuarioActual.usuUsuario}" 
+                                                 maxlength="50"/>
+                                <p:message for="usuNomUsu"/>
+                                <p:outputLabel  value="#{txt.text_passwd}"/>
+                                <p:password    maxlength="25" size="40" id="usuPassUsu" value="#{gestionUsuarioControlador.usuarioActual.usuClave}" 
+                                               />
+                                <p:message for="usuPassUsu"/> 
+                                <p:outputLabel  value="#{txt.text_mail}"/>
+                                <p:inputText    maxlength="100" size="50" id="usuMail" value="#{gestionUsuarioControlador.usuarioActual.usuMail}" 
+                                                />
+                                <p:message for="usuMail"/>  
+                                <p:outputLabel value="#{txt.text_estado}"/>
+                                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                    <p:selectBooleanCheckbox  value="#{gestionUsuarioControlador.usuarioActual.usuEstado}" >
+                                    </p:selectBooleanCheckbox>
+                                </h:panelGrid>
+                                <h:column></h:column>
+                                <center>
+                                    <h:panelGrid columns="2">
+                                        <p:commandButton value="#{txt.btn_guardar_global}" 
+                                                         id="btnGuardar" 
+                                                         action="#{gestionUsuarioControlador.guardarUsuario()}" 
+                                                         icon="ui-icon-disk"  
+                                                         process="@this,panelContieneUsuForms" 
+                                                         update=":frmGestionUsuario:panelConieneListas,panelContieneUsuForms,msgs"
+                                                         async="true"
+                                                         global="false"
+                                                         />
+                                        <p:commandButton value="#{txt.btn_nuevo}" 
+                                                         id="btnNuevo" 
+                                                         action="#{gestionUsuarioControlador.refrescaNuevo()}" 
+                                                         icon="ui-icon-document"  
+                                                         process="@this,panelContieneUsuForms" 
+                                                         update=":frmGestionUsuario:panelConieneListas,panelContieneCombo,panelContienePickList,panelContieneUsuForms,msgs"
+                                                         async="true"
+                                                         global="false"
+                                                         />
+                                    </h:panelGrid>
+                                </center>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel id="panel2" header="#{txt.lbl_asigna_rol_usu}">
+                            <center>
+                                <h:panelGrid id="panelContieneCombo" columns="2">
+                                    <p:outputLabel value="#{txt.lbl_combo_aplicaciones}"/>
+                                    <h:panelGrid id="comboAplicaciones"> 
+                                        <p:selectOneMenu   required="false" id="cmbApl" 
+                                                           value="#{gestionUsuarioControlador.aplicacionActual}" style="width:250px"
+                                                           converter="#{aplicacionConverter}" var="t">
+                                            <f:selectItem  itemLabel="Seleccione.." itemValue="" /> 
+                                            <f:selectItems var="tipApl"  
+                                                           value="#{gestionUsuarioControlador.listadoAplicaciones}" 
+                                                           itemLabel="#{tipApl.apliNombre}" 
+                                                           itemValue="#{tipApl}"/> 
+                                            <p:ajax listener="#{gestionUsuarioControlador.cargaPicLstParametroApli()}"  update="panelContienePickList" />
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.apliNombre}" style="font-size: 10px"/> 
+                                            </p:column> 
+
+                                        </p:selectOneMenu>
+                                        <p:message  for="cmbApl"/> 
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+
+                                <h:panelGrid id="panelContienePickList"    >
+                                    <h:outputLabel value="#{txt.lbl_selecciona_rol}"/>                
+                                    <p:pickList  id="pickList"  style="font-size:12px"  value="#{gestionUsuarioControlador.roles}" var="columRol"   
+                                                 itemLabel="#{columRol.rolNemonico}/#{columRol.rolNombre}" itemValue="#{columRol}" 
+                                                 converter="#{segRolConverter}" showSourceFilter="true" showTargetFilter="true">
+                                    </p:pickList>
+                                    <p:commandButton value="#{txt.btn_guardar_global}" 
+                                                     id="btnGuardarUsuRol" 
+                                                     action="#{gestionUsuarioControlador.guardarRolesAsignadosDeUsuario()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this,panelContienePickList" 
+                                                     update=":frmGestionUsuario:panelConieneListas,panelContieneUsuForms,msgs"
+                                                     async="true"
+                                                     global="false"
+                                                     />
+
+                                </h:panelGrid>
+                            </center>
+
+                        </p:panel>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid id="panelConieneListas">
+                        <h:panelGrid id="panelListaUsuarios" columns="1" width="800" styleClass="hpanelGrid_font">
+                            <p:dataTable paginator="true" rows="10" id="tablaListaAgencias" value="#{gestionUsuarioControlador.listaUsuarios}"  var="usuColumna"   
+                                         selectionMode="single" rowKey="#{usuColumna.usuIdentificacion}"
+                                         styleClass="pdataTable_font"
+                                         currentPageReportTemplate="{currentPage} de {totalPages}">  
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{txt.lbl_iden_usu}" style="font-size:15px;"/>
+                                </f:facet>
+                                <p:column filterBy="#{usuColumna.usuIdentificacion}" headerText="#{txt.lbl_iden_usu}" width="100" style="font-size:12px;">
+                                    <h:outputText value="#{usuColumna.usuIdentificacion}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column filterBy="#{usuColumna.usuUsuario}" headerText="#{txt.lbl_usuario}" width="100" style="font-size:12px;">
+                                    <h:outputText value="#{usuColumna.usuUsuario}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column    headerText="#{txt.lbl_nom}" width="150" style="font-size:12px;">
+                                    <h:outputText value="#{usuColumna.usuNombres}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column headerText="#{txt.lbl_ape}" width="150" style="font-size:12px;">
+                                    <h:outputText value="#{usuColumna.usuApellidos}" style="font-size:12px;" />
+                                </p:column>  
+                                <p:column headerText="#{txt.lbl_mail}" width="150" style="font-size:12px;">
+                                    <h:outputText value="#{usuColumna.usuMail}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column headerText="#{txt.lbl_estado}" width="150" style="font-size:12px;">
+                                    <p:selectBooleanCheckbox disabled="true"  value="#{usuColumna.usuEstado}" >
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+                                <p:column headerText="#{txt.btn_editar_global}" style="width:50px;text-align: center;font-size:12px;" >
+                                    <p:commandButton style="font-size:12px;" icon="ui-icon-pencil"  action="#{gestionUsuarioControlador.recuperarUsuariosCampos(usuColumna)}" 
+                                                     process="@this" update=":frmGestionUsuario:panelContieneUsuForms,:frmGestionUsuario:panelConieneListas,:frmGestionUsuario:msgs" async="true" global="false">
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column headerText="#{txt.btn_eliminar_global}" style="width:50px;text-align: center;font-size:12px;" >
+                                    <p:commandButton style="font-size:12px;" icon="ui-icon-trash"  
+                                                     actionListener="#{gestionUsuarioControlador.confirmaEliminar(usuColumna)}" 
+                                                     process="@this" update=":frmGestionUsuario:panelConieneListas,:frmGestionUsuario:panelListaUsuarios,:frmGestionUsuario:message" async="true" global="false">
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar el registro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>                      
+                        </h:panelGrid>
+                        <p:growl id="message" showDetail="true" />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </h:panelGrid>
+
+                </center>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

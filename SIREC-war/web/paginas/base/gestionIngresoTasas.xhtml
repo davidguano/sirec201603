@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <center>
+        <h:panelGrid id="panelIngTasas" width="1000" columns="1" >                                                 
+
+            <center>
+                <p:panel>
+                    <center>
+                        <h:panelGrid id="panelIngreso" columns="3">    
+
+                            <p:outputLabel value="#{txt.DESCRIPCION}"/>
+
+                            <p:inputTextarea id="tasDes" value="#{gestionTasasControlador.tasasActual.tasDescripcion}" style="width:200px"
+                                             rows="3" required="true" requiredMessage="Se nesecita un valor: #{txt.DESCRIPCION}"/>
+                             <p:message  for="tasDes" display="icon"/>
+                             
+                            <p:outputLabel value="#{txt.DEPARTAMENTO}"/>
+                            <p:selectOneMenu id="tasDep" value="#{gestionTasasControlador.tasasActual.catdetDepartamento}" style="width:200px"
+                                             converter="#{catalogoDetalleConverter}" var="t" required="true" requiredMessage="Se nesecita un valor: #{txt.DEPARTAMENTO}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                <f:selectItems var="tipo" 
+                                               value="#{gestionTasasControlador.listaCatalogoDetalleDepartamentos}" 
+                                               itemLabel="#{tipo.catdetTexto}" 
+                                               itemValue="#{tipo}"/> 
+                                <p:column width="200" style="white-space: normal">  
+                                    <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                </p:column>                                                                             
+                            </p:selectOneMenu> 
+                            <p:message for="tasDep" display="icon"/>
+
+                            <p:outputLabel value="#{txt.TIPO_VALOR}"/>
+                            <p:selectOneMenu id="tasTipVal" value="#{gestionTasasControlador.tasasActual.catdetTipoValor}" style="width:200px"
+                                             converter="#{catalogoDetalleConverter}" var="t" required="true" requiredMessage="Se nesecita un valor: #{txt.TIPO_VALOR}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                <f:selectItems var="tipo" 
+                                               value="#{gestionTasasControlador.listaCatalogoDetalleTipoValor}" 
+                                               itemLabel="#{tipo.catdetTexto}" 
+                                               itemValue="#{tipo}"/> 
+                                <p:column width="200" style="white-space: normal">  
+                                    <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                </p:column>   
+                                <p:ajax listener="#{gestionTasasControlador.definirTipo()}"
+                                        process="@this" async="true" global="false" update="tipoSigno"/>  
+                            </p:selectOneMenu> 
+                            <p:message for="tasTipVal" display="icon"/>
+
+                            <p:outputLabel id="tipoSigno" value="#{txt.VALOR} #{gestionTasasControlador.tipoSigno}"/>                            
+                            <p:inputText id="tasVal" value="#{gestionTasasControlador.tasasActual.tasValor}"
+                                         onkeypress="return isDecimalKey(event)" required="true" requiredMessage="Se nesecita un valor: #{txt.VALOR}"/>
+                            <p:message for="tasVal" display="icon"/>
+                            
+                            <p:outputLabel value="#{txt.GENERA_IVA}"/>
+                            <p:selectBooleanButton id="tasIva" value="#{gestionTasasControlador.tasasActual.tasConIva}" onLabel="Si" offLabel="No" style="width:60px" required="true" />
+                            <p:message for="tasIva" display="icon"/>
+                            
+                            <p:outputLabel value="#{txt.observaciones}"/>
+                            <p:inputTextarea id="tasObs" value="#{gestionTasasControlador.tasasActual.tasObservaciones}" style="width:200px"
+                                             rows="3" required="true" requiredMessage="Se nesecita un valor: #{txt.observaciones}"/>
+                            <p:message for="tasObs" display="icon"/>
+                             
+                        </h:panelGrid>                                                                                                       
+
+
+                        <p:commandButton value="#{txt.guardar_btn}" 
+                                         id="btnGuardarIngTasa" 
+                                         action="#{gestionTasasControlador.guardarIngresoTasa()}" 
+                                         icon="ui-icon-disk"  
+                                         process="@this,panelIngreso" 
+                                         update=":frmTasa:msgs, :frmTasa:tabTasa:pnlLstTasa, :frmTasa:tabTasa:panelIngreso"
+                                         async="true"
+                                         global="false"
+                                         />   
+
+                        <p:commandButton value="#{txt.btn_nuevo}" 
+                                         id="btnNuevoIngTasa" 
+                                         action="#{gestionTasasControlador.nuevoIngresoTasa()}" 
+                                         icon="ui-icon-disk"  
+                                         process="@this" 
+                                         update=":frmTasa:tabTasa:panelIngreso"
+                                         async="true"
+                                         global="false"
+                                         />
+
+                    </center>  
+                </p:panel>
+
+                <p:panel id="pnlLstTasa">                                
+                    <p:dataTable id="lstTasa" value="#{gestionTasasControlador.listaTasas}"  var="tasa"  >
+                        <f:facet name="header">
+                            <p:outputLabel value="Lista de Tasas" style="font-size:12px;"/>
+                        </f:facet>
+                        <p:column headerText="Tasa" width="150" filterBy="#{tasa.tasDescripcion}" filterMatchMode="contains">
+                            <h:outputText value="#{tasa.tasDescripcion}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column headerText="Departamento" width="150" filterBy="#{tasa.catdetDepartamento.catdetTexto}" filterMatchMode="contains">
+                            <h:outputText value="#{tasa.catdetDepartamento.catdetTexto}" style="font-size:12px;" />
+                        </p:column>
+
+                        <p:column headerText="Tipo de Valor" width="50" filterBy="#{tasa.catdetTipoValor.catdetTexto}" filterMatchMode="contains">
+                            <h:outputText value="#{tasa.catdetTipoValor.catdetTexto}" style="font-size:12px;" />
+                        </p:column>
+                        <p:column headerText="Valor" width="50">
+                            <h:outputText value="#{tasa.tasValor}" style="font-size:12px;"/>
+                        </p:column>
+                        <p:column headerText="Genera Iva" width="50">
+                            <h:outputText value="Si" rendered="#{tasa.tasConIva =='true'}" style="font-size:12px;" />
+                            <h:outputText value="No" rendered="#{tasa.tasConIva =='false'}" style="font-size:12px;" />                                           
+                        </p:column>
+                        <p:column headerText="Observación" width="105" filterBy="#{tasa.tasObservaciones}" filterMatchMode="contains">
+                            <h:outputText value="#{tasa.tasObservaciones}" style="font-size:12px;"/>
+                        </p:column>     
+                        
+                        <p:column headerText="Editar" style="width:45px;text-align: center" >
+                                                <p:commandButton icon="ui-icon-pencil" action="#{gestionTasasControlador.recuperarTasa(tasa)}" 
+                                                                 process="@this" update=":frmTasa:tabTasa:panelIngreso" async="true" global="false">
+                                                </p:commandButton>
+                                            </p:column>
+                                            <p:column headerText="Eliminar" style="width:30px;text-align: center" >
+                                                <p:commandButton icon="ui-icon-trash" action="#{gestionTasasControlador.eliminarTasa(tasa)}" 
+                                                             process="@this" update=":frmTasa:tabTasa:pnlLstTasa,:frmTasa:msgs" async="true" global="false">
+                                                    <p:confirm header="Confirmación" message ="¿Está seguro de eliminar el registro de Tasa?" icon="ui-icon-alert" />
+                                            </p:commandButton>
+                                                
+                                        </p:column>
+                        
+                    </p:dataTable>
+                                        
+                                                    
+
+                </p:panel>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+
+            </center>                                                                                                        
+        </h:panelGrid>
+    </center>
+</html>        

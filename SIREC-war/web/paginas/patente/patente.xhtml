@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <!--FICHA DE PATENTE-->
+            <h:form id="frmPat">   
+               <p:growl id="msgs" showSummary="true" sticky="true" showDetail="false"   /> 
+                <center>
+                    <p:tabView id="tabPrin" style="font-size:12px">
+                        <p:ajax event="tabChange"/>
+
+                   <p:tab title="Identificación" id="patRegFicha">
+                            <ui:include src="patenteFichaReg.xhtml" />
+                        </p:tab> 
+                        <p:tab title="Exoneraciones, deducciones y multas de patentes" id="exoDedMulPat">
+                            <ui:include src="patentesExoDeducMultas.xhtml" />
+                        </p:tab> 
+                        <p:tab title="Determinación de patentes" id="patDet">
+                            <ui:include src="patentesDeterminacion.xhtml" />
+                        </p:tab> 
+                        <p:tab title="Ingreso de tabla de amortización" >
+                            <ui:include src="patentesTblAmortizacion.xhtml" />
+                        </p:tab>  
+                         <p:tab title="Exoneraciones, deducciones y multas 1.5 por mil" >
+                            <ui:include src="15porMilExoDeducMultas.xhtml" />
+                        </p:tab> 
+                        <p:tab title="Determinación 1.5 por mil" >
+                            <ui:include src="15porMilDeterminacion.xhtml" />
+                        </p:tab>  
+                        <p:tab title="Emisión de patentes y 1.5 por mil" >
+                           <ui:include src="patentesEmision.xhtml" />
+                        </p:tab>
+                    </p:tabView>
+                </center>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

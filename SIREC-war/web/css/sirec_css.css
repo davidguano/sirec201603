@@ -1,0 +1,309 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18/11/2015, 01:22:25 PM
+    Author     : dguano
+*/
+
+root { 
+    display: block;
+}
+
+/*Estilos de Pagina Login*/
+
+/*Contenedor Principal, incluye una sombra*/
+#container {
+    background-color: #FFFFFF;
+    width: 100%;
+    margin: 10px auto 50px auto;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+}
+
+/*imagen y tamaño de cabecera*/
+#header {
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 50px;
+}
+/*Estilo de Logo de cabecera*/
+#floating_bar {
+    background-color: #FFFFFF;
+    width: 150px;
+    height: 55px;
+    padding: 0;
+    position: relative;
+    z-index: 100;
+    margin-bottom: -150px;
+    top: 5px;
+    left: 25px;
+}
+
+/*Posicion y formato de Titulo cabecera*/
+#section_tag {
+    background-color: #FFFFFF;
+    text-align: center;
+    font-family:Tahoma, sans-serif;
+    font-weight: bold;
+    font-size: 15px;
+    max-width: 800px;
+    color: #08175C;
+    height: 25px;
+    z-index: 100;
+    position: relative;
+    margin-bottom: -55px;
+    top: 10px;
+    left: 290px;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.35);
+    zoom: 1;
+}
+/*Contenido*/
+#content {
+    /*background-image: url(../imagenes/general/grad.jpg);*/
+    background-repeat: repeat-x;
+    width: 100%;
+    min-height: 250px;
+    margin: 0 auto;
+    clear: both;
+}
+/*sector para mensajes de inicio*/
+#nav {
+    background-color: #57595B;
+    height: 34px;
+    width: 900px;
+    margin: 0 auto;
+    border-bottom: 5px solid #000033;
+    position: relative;
+}
+/*sector para menu*/
+#menu {
+    height: 34px;
+    width: 900px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/*------------- CLEARFIX HACK -------------*/
+.clearfix {
+    zoom: 1;
+
+}
+.clearfix:before, .clearfix:after {
+    content: " ";
+    display: block;
+    height: 0;
+    overflow: hidden;
+}
+.clearfix:after {
+    clear: both;
+}
+
+/*franja para empezar el pie de pagina*/
+#content_bottom {
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 1px;
+    /*naranja 230,151,0*/
+    border-bottom: 10px solid #1482B4 ;
+}
+
+/*pie de pagina*/
+#footer {
+    width: 100%;
+    padding: 0 0px;
+    text-align: right;
+    /*celeste 20,132,230*/
+    /*border-top: 10px solid #1484E6;*/
+    /*verde  73,160,5*/
+    border-top: 10px solid #08175C;
+}
+.estiloPiePagina{
+    text-align: right;
+    font-size: 8px;
+    font-family:Tahoma, sans-serif;
+    color:#696969;
+}
+
+.ui-datatable tbody td.wrap {
+    white-space: normal;
+}
+
+.estilo-pagina{
+    font-size: 10px;
+}
+.ras-estilo-pagina{
+
+}
+.estiloSubtotal {
+    /*celeste*/
+    background:  #C5D9F1;
+    font-weight: bold;
+}
+.estiloTotal {
+    font-weight: bold;
+}
+
+.estiloBloqueado{
+    background-color:  #A9A9A9;
+}
+.estiloUsoInec {
+    /*celeste*/
+    background:  #C5D9F1;
+    font-weight: bold;
+}
+
+.columnaEtiqueta {
+    width: 100px;
+}
+
+.columnaValor {
+    width: 350px;
+}
+.ui-custompanelgrid1, .ui-custompanelgrid1 td {
+    background-color:#F0F9FC;
+}
+.estiloPanelTitulo {
+    /*celeste*/
+    background:  #C5D9F1;
+    font-weight: bold;
+    text-align: center;
+    white-space: pre-line;
+}
+.estiloTextoCandaraMed{
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 14px;
+}
+.estiloTextoCandaraPeq{
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 10px;
+}
+.estiloTextoCandaraGran{
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color:#1484E6;
+}
+.estiloTextoCandaraMedColor{
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    font-size: 14px;
+    /*celeste 20,132,230*/
+    color:#1484E6;
+}
+
+.estiloLogin{
+    font-size: 12px;
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+
+}
+.datalist-noborder .ui-widget-content {
+    border: none;
+    background:#F0F9FC;
+}
+
+/* estilos contenedores y controles */
+.estiloPanelExterior {
+    margin-left: 10px; 
+    margin-right: 10px; 
+    font-size: 10px   
+}
+
+.estiloBoton {
+    width: 80px;       
+}
+
+.estiloBotonGenerico {    
+    width: 40px;  
+    height: 32px;  
+}
+
+.estiloComboBox {
+    width: 250px;     
+}
+
+.estiloColumnaAccion {    
+    width: 50px;
+    text-align: center;
+}
+
+.estiloColumnaEditar, .estiloColumnaEliminar, .estiloColumnaBuscar {    
+    width: 20px;
+    text-align: center;
+}
+
+/* grid variables */
+.estiloColumnaNumerica {    
+    width: 45px; 
+    text-align: right
+}
+.estiloDashboard{
+    font-size: 10px;
+}
+.estiloDashboard td {
+    vertical-align: top !important;
+}
+.ui-tooltip {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px 0 #ddd;
+    -moz-box-shadow: 0 0 10px 0 #ddd;
+    -webkit-box-shadow: 0 0 10px 0 #ddd;
+    color: #666;
+    background: #f8f8f8;
+    font-size: 10px;
+}
+
+
+.topAligned {
+    vertical-align: top;
+}
+
+.hform_bg_width{
+    background: #FFD382;
+    width: 100%;
+}
+.hpanelGrid_font{
+    font-size: 12px !important;
+    color: #000033;
+
+}
+
+.pdataTable_font{
+    font-size: 10px !important;
+    color: #000033;
+}
+.hpanelGrid_vert_align td {
+    vertical-align: top !important;
+}
+
+.pinputText_bg_font{
+    background:#80c9c6 !important ;
+}
+
+.pinputTextarea_bg_font{
+    background:#80c9c6 !important ;
+}
+.houtputText_font_bold_10{
+    font-size: 10px !important;
+    font-weight: bold;
+}
+.houtputText_font_bold_12{
+    font-size: 12px !important;
+    font-weight: bold;
+    color:#142b3b;
+}
+.houtputText_font_bold_14{
+    font-size: 14px !important;
+    font-weight: bold;
+    color:#142b3b;
+}
+.houtputText_font_bold_16{
+    font-size: 16px !important;
+    font-weight: bold;
+    color:#142b3b;
+}
+

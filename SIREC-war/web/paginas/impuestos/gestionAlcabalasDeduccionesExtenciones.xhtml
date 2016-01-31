@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+                
+                <center>
+                    <h:panelGrid id="panelContieneAplicacion2" width="1000" columns="1" >                                                 
+                        <p:panel id="pnlDed" header="#{txt.DEDUCCIONES}" style="background: #8BBAC9;">                                
+                                <h:panelGrid columns="2">
+                                    <p:selectManyCheckbox id="cmbDec" value="#{gestionAlcabalasControlador.listaAdicionalesDeductivosDeduccionesSeleccion}"
+                                                  layout="grid" columns="1"
+                                                  style="width:500px" 
+                                                  > 
+                                <f:selectItems var="tipo" 
+                                               value="#{gestionAlcabalasControlador.listaAdicionalesDeductivosDeducciones}" 
+                                               itemLabel="#{tipo.adidedDescripcion}" 
+                                               itemValue="#{tipo.adidedCodigo}"/> 
+                            </p:selectManyCheckbox>
+                                </h:panelGrid>                                                                                                       
+                                
+                                </p:panel>
+                            
+                        <p:panel id="pnlEx" header="#{txt.EXENCIONES}" style="background: #A2AFD3;">                                
+                                <h:panelGrid columns="2">
+                                    <p:selectManyCheckbox id="cmbExc" value="#{gestionAlcabalasControlador.listaAdicionalesDeductivosExcencionesSeleccion}"
+                                                  layout="grid" columns="1"
+                                                  style="width:1000px" 
+                                                  > 
+                                <f:selectItems var="tipo" 
+                                               value="#{gestionAlcabalasControlador.listaAdicionalesDeductivosExcenciones}" 
+                                               itemLabel="#{tipo.adidedDescripcion}" 
+                                               itemValue="#{tipo.adidedCodigo}"/> 
+                            </p:selectManyCheckbox>
+                                </h:panelGrid>                                                                                                       
+                                
+                                </p:panel>
+                       
+                        <p:panel id="pnlDoc" header="#{txt.DOCUMENTOS}" style="background: #EED290;">    
+                        
+                               <p:fileUpload fileUploadListener="#{gestionAlcabalasControlador.handleFileUpload}"  
+                                                      mode="advanced"
+                                                      dragDropSupport="false"
+                                                      multiple="true"  
+                                                      update=":frmAlcabalas:msgs,:frmAlcabalas:tabAlca:pnllstArch"
+                                                      sizeLimit="10000000000"
+                                                      allowTypes="/(\.|\/)(pdf|xls|xlsx|jpg)$/"
+                                                      invalidSizeMessage="El archivo debe ser maximo 1MB"
+                                                      label="Seleccione el Documento" 
+                                                      uploadLabel="Cargar"
+                                                      cancelLabel="Cancelar"
+                                                      process="@this,">                                                                                                                                        
+                                        </p:fileUpload>
+                            
+                            
+                             <br/>
+                                <p:commandButton value="#{txt.VER_dOC_btn}" 
+                                                     id="btnVerDoc" 
+                                                     action="#{gestionAlcabalasControlador.listarArchivos()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this" 
+                                                     update=":frmAlcabalas:tabAlca:pnllstArch,:frmAlcabalas:msgs"
+                                                     async="true"
+                                                     global="false"
+                                                     />
+                            <p:panel id="pnllstArch">                                
+                                <p:dataTable id="lstArch" value="#{gestionAlcabalasControlador.listaAlcabalasArchivo}"  var="archivo"  
+                                             rowKey="#{archivo.prearcCodigo}">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Lista de Archivos" style="font-size:12px;"/>
+                                        </f:facet>
+                                        <p:column headerText="Tipo" width="50">
+                                            <h:outputText value="#{archivo.prearcTipo}" style="font-size:12px;" />
+                                        </p:column>
+                                        <p:column headerText="Nombre del Archivo" width="150">
+                                            <h:outputText value="#{archivo.prearcNombre}" style="font-size:12px;" />
+                                        </p:column>
+                                        <p:column headerText="Fecha de Creación" width="105">
+                                            <h:outputText value="#{archivo.ultaccMarcatiempo}" style="font-size:12px;"/>
+                                        </p:column>
+                                       <p:column headerText="Descargar" width="100">
+                                           <center>
+                                               <p:commandButton icon="fa fa-download fa-lg" async="true" global="false" process="@this" actionListener="#{gestionAlcabalasControlador.descargarArchivo(archivo)}" oncomplete="javascript:window.open('#{facesContext.externalContext.requestContextPath}/DescargarArchivos','DescargarArchivos')">                                        
+                                               </p:commandButton>
+                                    </center>         
+                                        </p:column>                                           
+                                        <p:column headerText="Eliminar" width="50">
+                                            <p:commandButton icon="ui-icon-trash" action="#{gestionAlcabalasControlador.eliminarArchivo(archivo)}" 
+                                                             update=":frmAlcabalas:tabAlca:pnllstArch,:frmAlcabalas:msgs"
+                                                             process="@this" global="false" async="true"  ajax="true" >
+                                                <p:confirm header="Confirmacion" message="Desea eliminar el Archivo?" icon="ui-icon-alert" />
+                                            </p:commandButton>
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="drop">
+                                                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="No" type="button"  styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+                                        </p:column>
+                                    </p:dataTable>
+                                
+                                </p:panel>
+                        </p:panel>
+                                
+                              <p:commandButton value="#{txt.guardar_btn}" 
+                                                     id="btnGuardarDedEx"  
+                                                     action="#{gestionAlcabalasControlador.guardarDeduccionesExcenciones()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this, pnllstArch, pnlDed, pnlEx" 
+                                                     update=":frmAlcabalas:msgs"
+                                                     async="true"
+                                                     global="false"
+                                                     />                                                                                                                    
+                  </h:panelGrid>
+                </center>
+</html>        

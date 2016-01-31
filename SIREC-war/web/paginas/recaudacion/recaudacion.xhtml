@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <center>
+                <h:form id="frmRec" style="font-size: 12px;">         
+                    <p:growl id="msgs" showDetail="true"/>
+                        <p:panel header="Busqueda">
+                            <h:panelGrid columns="3" width="75%">
+                            <h:outputLabel value="CI/RUC:" for="recProCi" />
+                            <p:autoComplete id="recProCi" value="#{recaudacionControlador.propietarioBusqueda}" 
+                                            completeMethod="#{recaudacionControlador.obtenerPropietarioPorCedula}" 
+                                            converter="#{propietarioConverter}"
+                                            minQueryLength="5"
+                                            var="pro" itemLabel="#{pro.proCi}" itemValue="#{pro}">
+                                <p:column>
+                                    <h:outputText value="#{pro.proCi} #{pro.proApellidos} #{pro.proNombres}" />
+                                </p:column>
+                                <p:ajax event="itemSelect"
+                                        process="@this"
+                                        update="recProApe,recProNom"
+                                        async="true" global="false"/>
+                            </p:autoComplete>
+                            <p:message for="recProCi"/>
+                            
+                            <h:outputLabel value="Apellidos:" for="recProApe" />
+                            <p:autoComplete id="recProApe" value="#{recaudacionControlador.propietarioBusqueda}" 
+                                            completeMethod="#{recaudacionControlador.obtenerPropietarioPorApellidos}" 
+                                            converter="#{propietarioConverter}"
+                                            minQueryLength="5"
+                                            size="100"
+                                            var="pro" itemLabel="#{pro.proApellidos}" itemValue="#{pro}"  forceSelection="true">
+                                <p:column>
+                                    <h:outputText value="#{pro.proCi} #{pro.proApellidos} #{pro.proNombres}" />
+                                </p:column>
+                                <p:ajax event="itemSelect"
+                                        process="@this"
+                                        update="recProCi,recProNom"
+                                        async="true" global="false"/>
+                            </p:autoComplete>
+                            <p:message for="recProApe"/>
+                            <h:outputLabel value="Nombres:" for="recProNom" />
+                            <p:autoComplete id="recProNom" value="#{recaudacionControlador.propietarioBusqueda}" 
+                                            completeMethod="#{recaudacionControlador.obtenerPropietarioPorNombres}" 
+                                            converter="#{propietarioConverter}"
+                                            minQueryLength="5"
+                                            size="100"
+                                            var="pro" itemLabel="#{pro.proNombres}" itemValue="#{pro}"  forceSelection="true">
+                                <p:column>
+                                    <h:outputText value="#{pro.proCi} #{pro.proApellidos} #{pro.proNombres}" />
+                                </p:column>
+                                <p:ajax event="itemSelect"
+                                        process="@this"
+                                        update="recProApe,recProCi"
+                                        async="true" global="false"/>
+                            </p:autoComplete>
+                            <p:message for="recProNom"/>
+                        </h:panelGrid>
+                        <p:commandButton id="btnConsultarRubros" value="Consultar"
+                                         action="#{recaudacionControlador.listarRubrosARecaudar}"
+                                         async="true" global="false"
+                                         update="pnlRecaudacion,pnlListaRecaudaciones,pnlListaRecaudacionDetalle">
+                        </p:commandButton>
+                        </p:panel>
+                        <br/>
+                        <p:panel header="Recaudacion">
+                        <h:panelGrid id="pnlRecaudacion" columns="4">
+                            <p:outputLabel value="CI/RUC:"/>
+                            <p:outputLabel value="#{recaudacionControlador.recaudacionCabeceraActual.proCi.proCi}"/>
+                            <f:verbatim/>
+                            <f:verbatim/>
+                            <p:outputLabel value="Apellidos:"/>
+                            <p:outputLabel value="#{recaudacionControlador.recaudacionCabeceraActual.proCi.proNombres}"/>
+                            <p:outputLabel value="Nombres:"/>
+                            <p:outputLabel value="#{recaudacionControlador.recaudacionCabeceraActual.proCi.proApellidos}"/>
+                        </h:panelGrid>
+                            <h:panelGrid id="pnlListaRecaudaciones" width="50%">
+                                <p:dataTable id="lstRecaudaciones" value="#{recaudacionControlador.listaRecaudacionCabActual}"
+                                             var="recCab"
+                                             emptyMessage="No existe historial de recaudaciones">
+                                    <p:column>
+                                        <h:outputText value="REC-#{recCab.recCodigo}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{recCab.recFecha}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <h:outputText value="#{recCab.recTotal}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:commandButton icon="fa fa-edit"
+                                                         action="#{recaudacionControlador.seleccionarRecaudacion(recCab)}"
+                                                         async="true" global="false"
+                                                         process="@this" update=":frmRec:pnlListaRecaudacionDetalle"/>
+                                    </p:column>
+                                    
+                                </p:dataTable>
+                            </h:panelGrid>
+
+                    <p:panel>
+                        <h:panelGrid id="pnlListaRecaudacionDetalle" width="50%">
+                            <p:dataTable id="lstRecaudacionDetalle" value="#{recaudacionControlador.listaRecaudacionDetalleActual}"
+                                         var="rec"
+                                         emptyMessage="No existen valores a recaudar.">
+                                <p:column >
+                                    <p:selectBooleanCheckbox value="#{rec.activo}"/>
+                                </p:column>
+                                <p:column headerText="Rubro">
+                                    <h:outputText value="Predial" rendered="#{rec.recdetTipo=='PR'}"/>
+                                </p:column>
+                                <p:column headerText="Referencia">
+                                    <h:outputText value="#{rec.recdetReferencia}"/>
+                                </p:column>
+                                <p:column headerText="Valor">
+                                    <h:outputText value="#{rec.recdetValor}"/>
+                                </p:column>
+                                <p:column headerText="Impresion">
+                                    <p:commandButton id="btnTituloPredialUrbano" icon="fa fa-print"
+                                                     action="#{recaudacionControlador.generarTituloPredialUrbanoDesdeDetalle(rec)}"
+                                                     process="@this"
+                                                     async="true" global="false"
+                                                     oncomplete="javascript:window.open('#{facesContext.externalContext.requestContextPath}/ReporteServlet','ReporteServlet')"
+                                                     rendered="#{rec.recdetTipo=='PR' and rec.recdetCodigo !=null}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                        <p:commandButton id="btnGuardarRec" value="Guardar"
+                                         action="#{recaudacionControlador.guardarRecaudacion}"
+                                         async="true" global="false" process="@this" update=":frmRec:msgs"/>
+                                         
+                    </p:panel>
+                        </p:panel>
+                </h:form>
+
+
+            </center>
+
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+                
+                <center>
+                    <h:panelGrid id="panelPlusvalia" width="1000" columns="1" >                                                 
+                        <p:panel id="pnlDet" header="#{txt.DETERMINACION}" style="background: #B9AED9;">                                
+                                <h:panelGrid columns="2">
+                                    
+                                    <p:outputLabel value="#{txt.TIPO_TARIFA}"/>
+                                    
+                                     <p:selectOneMenu id="pComTT" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catdetTipoTarifa}" style="width:180px;font-weight: bold;background: green;"
+                                                         converter="#{catalogoDetalleConverter}" var="t" required="true" requiredMessage="Se nesecita un valor: #{txt.TIPO_TARIFA}">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                            <f:selectItems var="tipo" 
+                                                           value="#{gestionAlcabalasControlador.listaTipoDeTarifa}" 
+                                                           itemLabel="#{tipo.catdetTexto}" 
+                                                           itemValue="#{tipo}"/> 
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                            </p:column>                                                                             
+                                        </p:selectOneMenu> 
+                                     
+                                     <p:outputLabel value="#{txt.FECHA_ÚLTIMA_ESCRITURA}" style="font-size: #{txt.font_size}"/>                                                                                                  
+                                     <p:calendar id="fecUlEsc" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalFechaUltescr}" pattern="dd-MM-yyyy" 
+                                                 required="true" requiredMessage="Se nesecita un valor: #{txt.FECHA_ÚLTIMA_ESCRITURA}"
+                                                 style="font-family: Arial; font-size: 15px;"/>
+                                     
+                                     <p:outputLabel value="#{txt.PRECIO_VENTA_ACTUAL}"/>
+                                     <p:inputText id="pPrecAct" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalPrecioventa}"
+                                                   readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.PRECIO_VENTA_ACTUAL}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                     
+                                     <p:outputLabel value="PRECIO DE VENTA ANTERIOR"/>
+                                     <p:inputText  id="pPrecAnt" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalPrecioventaAnt}"
+                                                   onkeypress="return isDecimalKey(event)" 
+                                                   required="true" requiredMessage="Se nesecita un valor: #{txt.sector}"
+                                                    style="font-family: Arial; font-size: 15px;"                                                   
+                                                   >
+                                                   <p:ajax event="blur" listener="#{gestionAlcabalasControlador.calularDiferenciaBruta}"  update=":frmAlcabalas:tabAlca:pDifBruta,pMej,pDifNeta"
+                                         process="@this,pPrecAnt,pPrecAct" async="true" global="false"/>  
+                                     </p:inputText>
+                                     
+                                      <p:outputLabel value="DIFERENCIA BRUTA"/>
+                                      <p:inputText id="pDifBruta" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalDifBruta}"
+                                                   readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.sector}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                      
+                                       <p:outputLabel value="MENOS VALORES DE CONTRIBUCIÓN POR MEJORAS"/>
+                                       <p:inputText id="pMej" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalValorContrmej}"
+                                                  readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.sector}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                      
+                                          <p:outputLabel value="DIFERENCIA NETA"/>
+                                        <p:inputText id="pDifNeta" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalDifNeta}"
+                                                   readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.sector}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                        
+                                </h:panelGrid>                                                                                                       
+                                
+                                </p:panel>
+                        
+                        <p:panel id="pnlDedPlus" header="#{txt.DEDUCCIONES}">
+                            <h:panelGrid columns="2">
+                                
+                              
+                                        
+                                        <p:outputLabel value="AÑOS TRANSCURRIDOS EN TRANSFERENCIA DE DOMINIO"/>
+                                        <p:inputText id="pAnosTrans" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalAniosTransf}"
+                                                      onkeypress="return isNumberKey(event)">
+                                             <p:ajax event="blur" listener="#{gestionAlcabalasControlador.calularValorAniosTranDominio()}"  update=":frmAlcabalas:tabAlca:pValAnosTrans,pDifFinal,pRebDes,pValRebDes,pBasImp,pImpuesto,pProc"
+                                         process="@this,pDifNeta, pComTT" async="true" global="false"/> 
+                                        </p:inputText>
+                                        
+                                        <p:outputLabel value="VALOR POR AÑOS TRANSCURRIDOS EN TRANSFERENCIA DE DOMINIO"/>
+                                        <p:inputText id="pValAnosTrans" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalAniosTransfVal}"
+                                                  disabled="true"/>
+                                        
+                                        <p:outputLabel value="DIFERENCIA"/>
+                                        <p:inputText id="pDifFinal" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalDifFinal}"
+                                                  disabled="true"/>
+                                                                                
+                                        <p:outputLabel value="REBAJA POR DESVALORIZACIÓN"/>
+                                        <p:inputText id="pRebDes" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalPorcRebaja}"
+                                                 disabled="true" />
+                                        <p:outputLabel value="VALOR REBAJA POR DESVALORIZACIÓN"/>
+                                        <p:inputText id="pValRebDes" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalValorRebaja}"
+                                                disabled="true"  />
+                                        
+                                        <p:outputLabel value="BASE IMPONIBLE"/>
+                                        <p:inputText id="pBasImp" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalBaseimp}"
+                                                 disabled="true" />
+                                        <p:outputLabel value="IMPUESTO"/>
+                                        <p:inputText id="pImpuesto" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalImpuesto}"
+                                            disabled="true"/>
+                                     
+                                        <p:outputLabel value="PROCESAMIENTO"/>
+                                        <p:inputText id="pProc" value="#{gestionAlcabalasControlador.catastroPredialPlusvaliaValoracion.catprepluvalTasaproc}"
+                                            disabled="true"/>
+                                
+                                
+                            </h:panelGrid>                                                        
+                        </p:panel>   
+                             
+                            
+                       <p:commandButton value="#{txt.guardar_btn}" 
+                                                     id="btnGuardarPlus" 
+                                                     action="#{gestionAlcabalasControlador.guardarPlusvalia()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this,pnlDet,pnlDedPlus"  
+                                                     update=":frmAlcabalas:msgs"
+                                                     async="true"
+                                                     global="false"
+                                                     />                                                                              
+                                                                                                                                           
+                  </h:panelGrid>
+                </center>
+</html>        

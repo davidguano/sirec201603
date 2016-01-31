@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRepDetInfAbaste" language="groovy" pageWidth="106" pageHeight="600" columnWidth="106" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e8ad7ba4-0bd9-4033-90a2-76081fbae47b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="catpreCodigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select c.cat_codigo as codItem, cpi.catdet_codigo as codInfra,c.cat_texto as tipoServInff,cd.catdet_texto as nomServInv
+from sirec.catastro_predial_infraestructura  cpi,sirec.catalogo_detalle cd,sirec.catalogo c
+where cpi.catdet_codigo=cd.catdet_codigo
+and cd.cat_codigo=c.cat_codigo
+and catpre_codigo=$P{catpreCodigo}
+and c.cat_nemonico='INF_ABAS_AGUA'
+order by cd.catdet_orden]]>
+	</queryString>
+	<field name="coditem" class="java.lang.Integer"/>
+	<field name="codinfra" class="java.lang.Integer"/>
+	<field name="tiposervinff" class="java.lang.String"/>
+	<field name="nomservinv" class="java.lang.String"/>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement mode="Opaque" x="91" y="2" width="13" height="13" uuid="ca6f8639-b692-44a4-94d3-7533de538feb"/>
+			</rectangle>
+			<textField>
+				<reportElement x="2" y="2" width="87" height="13" uuid="0469565c-4855-4d2b-bb84-e951f2afdf92"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomservinv}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="91" y="1" width="13" height="13" uuid="baf1ce59-748b-4c49-874c-19db31c885ad"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[x]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

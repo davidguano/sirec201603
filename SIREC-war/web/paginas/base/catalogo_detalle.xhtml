@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <center>
+                <h:form id="frmCatDet" style="font-size: 12px;">         
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panel  header="Detalles de Catalogos">
+                        <h:panelGrid columns="3" id="pnlCatDet">
+                            <p:outputLabel value="Catalogo:"/>
+                            <p:selectOneMenu id="cat" value="#{catalogoDetControlador.catalogoDetalleActual.catCodigo.catCodigo}">
+                                <f:selectItem itemLabel="Seleccione.." itemValue="#{null}"/>
+                                <f:selectItems value="#{catalogoDetControlador.listaCatalogos}" 
+                                               var="cat"
+                                               itemLabel="#{cat.catTexto}"
+                                               itemValue="#{cat.catCodigo}"/>
+                                <p:ajax event="change" async="true" global="false"
+                                        listener="#{catalogoDetControlador.listarDetallesPorCatalogo}"
+                                        process="@this" update="lstDetalles"/>
+                            </p:selectOneMenu> 
+                            <p:message for="cat"/>
+                            <p:outputLabel value="Texto:"/>
+                            <p:inputText id="texto" value="#{catalogoDetControlador.catalogoDetalleActual.catdetTexto}"
+                                         size="50"/>
+                            <p:message for="texto"/>
+                            <p:outputLabel value="Orden:"/>
+                            <p:inputText id="orden" value="#{catalogoDetControlador.catalogoDetalleActual.catdetOrden}"
+                                         size="5" maxlength="4"/>
+                            <p:message for="orden"/>
+                            <p:outputLabel value="Codigo:"/>
+                            <p:inputText id="codigo" value="#{catalogoDetControlador.catalogoDetalleActual.catdetCod}"
+                                         size="10" maxlength="10"/>
+                            <p:message for="codigo"/>
+                            <p:outputLabel value="Estado:"/>
+                            <p:selectBooleanCheckbox id="estado" value="#{catalogoDetControlador.catalogoDetalleActual.catdetEstado}"/>
+                            <p:message for="estado"/>
+                        </h:panelGrid>
+                        
+                        <h:panelGrid columns="2">
+                            <p:commandButton id="btnGuardar"
+                                             value="Guardar"
+                                             action="#{catalogoDetControlador.guardarCatDetalle}"
+                                             async="true" global="false"
+                                             update="@form"
+                                             process="@this,pnlCatDet"/>
+                            <p:commandButton id="btnNuevo"
+                                             value="Nuevo"
+                                             action="#{catalogoDetControlador.inicializar}"
+                                             async="true" global="false"
+                                             update="@form"
+                                             process="@this"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel>
+                        <h:panelGrid width="50%" id="lstDetalles">
+                            <p:dataTable value="#{catalogoDetControlador.listaCatDetalles}" var="item">
+                               <p:column headerText="Catalogo">
+                                    <h:outputText value="#{item.catCodigo.catNemonico}"/>
+                                </p:column>
+                                <p:column headerText="Codigo">
+                                    <h:outputText value="#{item.catdetCod}"/>
+                                </p:column>
+                                <p:column headerText="Detalle">
+                                    <h:outputText value="#{item.catdetTexto}"/>
+                                </p:column>
+                                <p:column headerText="Orden">
+                                    <h:outputText value="#{item.catdetOrden}"/>
+                                </p:column>
+                                <p:column >
+                                    <p:commandButton icon="fa fa-edit"
+                                                     action="#{catalogoDetControlador.seleccionarDetalle(item)}"
+                                                     async="true" global="false"
+                                                     process="@this" update=":frmCatDet:pnlCatDet"/>
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+
+
+            </center>
+
+        </ui:define>
+    </ui:composition>
+</html>

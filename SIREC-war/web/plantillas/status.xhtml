@@ -1,0 +1,13 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>  
+
+        <p:dialog modal="true" widgetVar="statusDialog" header="Espere" resizable="false"
+                  draggable="false" closable="false">  
+            <p:graphicImage value="/imagenes/ajaxloadingbar.gif" />  
+        </p:dialog>
+    </ui:composition>
+
+</html>

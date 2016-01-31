@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRepDetInfMaterial" language="groovy" pageWidth="71" pageHeight="600" columnWidth="71" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e8ad7ba4-0bd9-4033-90a2-76081fbae47b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="catpreCodigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select c.cat_codigo as codItem, cpi.catdet_codigo as codInfra,c.cat_texto as tipoServInff,cd.catdet_texto as nomServInv
+from sirec.catastro_predial_infraestructura  cpi,sirec.catalogo_detalle cd,sirec.catalogo c
+where cpi.catdet_codigo=cd.catdet_codigo
+and cd.cat_codigo=c.cat_codigo
+and catpre_codigo=$P{catpreCodigo}
+and c.cat_nemonico='INF_MATERIAL']]>
+	</queryString>
+	<field name="coditem" class="java.lang.Integer"/>
+	<field name="codinfra" class="java.lang.Integer"/>
+	<field name="tiposervinff" class="java.lang.String"/>
+	<field name="nomservinv" class="java.lang.String"/>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="47" y="1" width="13" height="13" uuid="c8b5cf8c-bcbc-4d93-8b88-473597d9b639"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="47" y="2" width="13" height="13" uuid="6d54cbd6-8157-4b74-b702-9218aaa39b8f"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="1" width="45" height="13" uuid="b23344fb-2446-45fc-af8a-6becd480aed3"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomservinv}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

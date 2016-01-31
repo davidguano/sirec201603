@@ -1,0 +1,248 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <!--FICHA DE PATENTE-->
+            <h:form id="frmDecTrib">   
+                <p:growl id="msgs" showDetail="true"/>
+                <center>
+                    <h:panelGrid id="pnlContieneDecTrib" width="1000" columns="1" > 
+                        <p:panel header="#{txt.lbl_header_dec_tributaria}" style="width: 99% !important; font-size: 12px !important;">
+                            <h:panelGrid columns="1">
+                                <h:panelGrid columns="3">
+                                    <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_actividad_economica}"/>
+                                    <p:selectOneMenu  requiredMessage="#{txt.lbl_tipo_declara} Se nesecita un valor"  required="true" id="cmbActEcon" 
+                                                      value="#{gestionDecTributariaControlador.catDetTipActEconActual}" style="width:250px"
+                                                      converter="#{catalogoDetalleConverter}" var="t">
+                                        <f:selectItem  itemLabel="Seleccione..." itemValue=""/> 
+                                        <f:selectItems var="tipTem"  
+                                                       value="#{gestionDecTributariaControlador.listCatDetTipEcoActual}" 
+                                                       itemLabel="#{tipTem.catdetTexto}" 
+                                                       itemValue="#{tipTem}"/> 
+                                        <p:ajax   listener="#{gestionDecTributariaControlador.cargarInfoPatentePropietario()}"  update="panlDatosPatentePropietario" />
+                                        <p:column width="200" style="white-space: normal">  
+                                            <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                        </p:column> 
+                                    </p:selectOneMenu>                               
+                                    <p:message for="cmbActEcon" display="icon"/>
+                                </h:panelGrid>
+                                <h:panelGrid  id="panlDatosPatentePropietario">
+                                    <h:panelGrid columns="6">
+                                        <p:outputLabel style="font-size: #{txt.font_size};" value="#{txt.lbl_nom_razon_social}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" id="txtRazonSocial" value="#{gestionDecTributariaControlador.propietarioActual.proRazonSocial}"  
+                                                      size="40"/>
+                                        <p:message for="txtRazonSocial" display="icon"/>
+
+                                        <p:outputLabel style="font-size: #{txt.font_size};" value="#{txt.lbl_ruc}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold"  disabled="true" id="txtRuc" value="#{gestionDecTributariaControlador.propietarioActual.proCi}"  
+                                                      size="40"/>
+                                        <p:message for="txtRuc" display="icon"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel style="font-size: #{txt.font_size};" value="#{txt.lbl_inic_act_economica}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold"  disabled="true" id="txtIniActEcon" value="#{gestionDecTributariaControlador.patenteActual.patInicioActEco}"  
+                                                      size="40"/>
+                                        <p:message for="txtIniActEcon" display="icon"/>
+
+                                        <p:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_obl_lleva_contab}"/>
+                                        <p:selectBooleanButton id="compPnl1_19" value="#{gestionDecTributariaControlador.patenteActual.patObligadoCont}" onLabel="Si" offLabel="No" style="width:60px" />
+                                        <p:message for="compPnl1_19" display="icon"/>
+                                    </h:panelGrid > 
+                                    <h:panelGrid>
+                                        <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_tipo_declara}"/>
+                                        <p:selectOneMenu requiredMessage="#{txt.lbl_tipo_declara} Se nesecita un valor"   required="true" id="cmbTipoDeclara" 
+                                                           value="#{gestionDecTributariaControlador.catDeTipoDeclaracion}" style="width:250px"
+                                                           converter="#{catalogoDetalleConverter}" var="t">
+                                            <f:selectItem  itemLabel="Seleccione..." itemValue="" /> 
+                                            <f:selectItems var="cmbTipoDeclara"  
+                                                           value="#{gestionDecTributariaControlador.lisCatDeTipoDeclara}" 
+                                                           itemLabel="#{tipTem.catdetTexto}" 
+                                                           itemValue="#{tipTem}"/> 
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                            </p:column> 
+                                        </p:selectOneMenu>                               
+                                        <p:message for="cmbTipoDeclara" display="icon"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+                                <h:panelGrid columns="6">
+                                    <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_anio_balance}"/>
+
+                                    <p:selectOneMenu requiredMessage="#{txt.lbl_tipo_declara} Se nesecita un valor"  id="cmbAnioBalance" value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valAnioBalance}" style="width:152px">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                        <f:selectItem itemLabel="2015" itemValue="#{2015}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="cmbAnioBalance" display="icon"/>
+
+                                    <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_anio_declaracion}"/>
+                                    <p:selectOneMenu requiredMessage="#{txt.lbl_tipo_declara} Se nesecita un valor" id="cmbAclaraAnio" value="#{gestionDetPatenteUnoCincoporMilControlador.patente15milValActual.pat15valAnioDecla}" style="width:152px">
+                                        <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                        <f:selectItem itemLabel="2015" itemValue="#{2015}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="cmbAclaraAnio" display="icon"/> 
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel rendered="#{gestionDetPatenteControlador.patenteActual.patObligadoCont==true}">
+                            <h:panelGrid   columns="6" >
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_activo_corriente}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtActCorr"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtActCorr" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_activo_no_corriente}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtActNoCorr"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtActNoCorr" display="icon"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid  columns="3" >
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_total_activos}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtTotAct"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtTotAct" display="icon"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="6" >
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_pasivo_corriente}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtPasCorr"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtPasCorr" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_pasivo_no_corriente}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtPasNoCorr"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtPasNoCorr" display="icon"/>
+                            </h:panelGrid>
+
+                            <h:panelGrid   columns="3" >
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_pasivo_contingente}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtPasconti"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtPasconti" display="icon"/>
+
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_total_pasivos}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtTotPasivos"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtTotPasivos" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_patrimonio}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtPatrimonio"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtPatrimonio" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_ingre_total_anual}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtTotAnual"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtTotAnual" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_utilidad_bruta}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtUtiBrut"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtUtiBrut" display="icon"/>
+
+                                <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_perdida}"/>
+                                <p:inputText maxlength="20" size="40"   id="txtPerdids"  value="#{gestionDecTributariaControlador.patenteActual.patPlaca}" 
+                                             />
+                                <p:message  for="txtPerdids" display="icon"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel header="#{txt.lbl_header_tabla_porcentaje}" style="font-size: 12px">
+                            <p:dataTable    paginator="true" rows="5" id="tablaListaCantones" value="#{gestionDecTributariaControlador.listCatDetCantones}"  var="cantonColumna"   
+                                            selectionMode="single" rowKey="#{cantonColumna.catdetTexto}"
+                                            styleClass="pdataTable_font"
+                                            currentPageReportTemplate="{currentPage} de {totalPages}">                              
+                                <p:column   headerText="CANTÓN" width="100" style="font-size:12px;">
+                                    <h:outputText value="#{cantonColumna.catdetTexto}" style="font-size:12px;" />
+                                </p:column> 
+                                <p:column   headerText="%INGRESO" width="100" style="font-size:12px;">
+                                    <h:outputText value="#{cantonColumna.catdetValorDecimal}" style="font-size:12px;" />
+                                </p:column>                                                                       
+                            </p:dataTable>     
+
+                        </p:panel> 
+                        <h:panelGrid columns="1">
+                            <p:commandButton value="#{txt.btn_calcula}" 
+                                             id="btnCalcular" 
+                                             action="#{gestionDecTributariaControlador.calcular()}" 
+                                             icon="ui-icon-disk"  
+                                             process="@this" 
+                                             update="patenteValoracion,patente15PorMilValoracion,:frmDecTrib:msgs"
+                                             async="true"
+                                             global="false"
+                                             />
+                        </h:panelGrid>  
+                        <center>
+                            <h:panelGrid columns="2">
+                                <p:panel header="#{txt.lbl_header_dec_trib_patente}" id="patenteValoracion" style="width: 99% !important; font-size: 12px !important;">
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_impuesto}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblImpuesto"  value="#{gestionDecTributariaControlador.patenteValoracionActual.patvalImpuesto}" 
+                                                     />
+                                        <p:message  for="lblImpuesto" display="icon"/>
+
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_total_deduc}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblTotDeduc"  value="#{gestionDecTributariaControlador.patenteValoracionActual.patvalDeducciones}" 
+                                                     />
+                                        <p:message  for="lblTotDeduc" display="icon"/>
+
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_bomberos}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblBombreos"  value="#{gestionDecTributariaControlador.patenteValoracionActual.patvalTasaBomb}" 
+                                                     />
+                                        <p:message  for="lblBombreos" display="icon"/>
+
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_tasa_procesamiento}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblTasaProces"  value="#{gestionDecTributariaControlador.patenteValoracionActual.patvalTasaProc}" 
+                                                     />
+                                        <p:message  for="lblTasaProces" display="icon"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                                <p:panel header="#{txt.lbl_header_dec_15porMil}" id="patente15PorMilValoracion" style="width: 99% !important; font-size: 12px !important;">
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_impuesto}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblImpuesto1"  value="#{gestionDecTributariaControlador.patente15milValActual.pat15valImpuesto}" 
+                                                     />
+                                        <p:message  for="lblImpuesto1" display="icon"/>
+
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_tasa_procesamiento}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblTasaProces1"  value="#{gestionDecTributariaControlador.patente15milValActual.pat15valTasaProc}" 
+                                                     />
+                                        <p:message  for="lblTasaProces1" display="icon"/>
+
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_recargos}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblRecargos"  value="#{gestionDecTributariaControlador.patente15milValActual.pat15valRecargos}" 
+                                                     />
+                                        <p:message  for="lblRecargos" display="icon"/>
+
+                                        <p:outputLabel  style="font-size: #{txt.font_size}" value="#{txt.lbl_total}"/>
+                                        <p:inputText style="background: lightgreen;color:black;font-weight: bold" disabled="true" maxlength="20" size="20"   id="lblTotal1"  value="#{gestionDecTributariaControlador.patente15milValActual.pat15valTotal}" 
+                                                     />
+                                        <p:message  for="lblTotal1" display="icon"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                                <h:panelGrid columns="1">
+                                    <p:commandButton id="btnReporteFicha" value="Imprimir"
+                                                     action="#{gestionDecTributariaControlador.generarReporteDeclaracionTributaria()}"
+                                                     oncomplete="javascript:window.open('#{facesContext.externalContext.requestContextPath}/ReporteServlet','ReporteServlet')"
+                                                     async="true"
+                                                     global="false"
+                                                     process="@this" 
+                                                     />
+                                </h:panelGrid>   
+                            </h:panelGrid> 
+                        </center>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

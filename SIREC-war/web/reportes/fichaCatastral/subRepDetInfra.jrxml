@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subRepDetInfra" language="groovy" pageWidth="454" pageHeight="600" columnWidth="454" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e8ad7ba4-0bd9-4033-90a2-76081fbae47b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="catpreCodigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR2_1_a" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_c" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_d" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_e" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_f" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_g" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_b" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from sirec.catastro_predial  where catpre_codigo=$P{catpreCodigo}]]>
+	</queryString>
+	<field name="catpre_codigo" class="java.lang.Integer"/>
+	<field name="catpre_cod_nacional" class="java.lang.String"/>
+	<field name="catpre_cod_local" class="java.lang.String"/>
+	<field name="catdet_tipo_via" class="java.lang.Integer"/>
+	<field name="catdet_tipo_ubicacion" class="java.lang.Integer"/>
+	<field name="catpre_numero" class="java.lang.String"/>
+	<field name="catpre_nombre_sector" class="java.lang.String"/>
+	<field name="catdet_tipo_prop1" class="java.lang.Integer"/>
+	<field name="catdet_tipo_prop2" class="java.lang.Integer"/>
+	<field name="catdet_ref_cartografica" class="java.lang.Integer"/>
+	<field name="catpre_coord_latitud" class="java.lang.Double"/>
+	<field name="catpre_coord_longitud" class="java.lang.Double"/>
+	<field name="catpre_longitud_frente_principal" class="java.lang.Double"/>
+	<field name="catpre_area_total" class="java.lang.Double"/>
+	<field name="catpre_area_total_esc" class="java.lang.Double"/>
+	<field name="catpre_area_total_cons" class="java.lang.Double"/>
+	<field name="catpre_colindante_norte" class="java.lang.String"/>
+	<field name="catpre_colindante_sur" class="java.lang.String"/>
+	<field name="catpre_colindante_este" class="java.lang.String"/>
+	<field name="catpre_colindante_oeste" class="java.lang.String"/>
+	<field name="catdet_dominio" class="java.lang.Integer"/>
+	<field name="catdet_traslacion_dominio" class="java.lang.Integer"/>
+	<field name="catpre_existe_escrituras" class="java.lang.Boolean"/>
+	<field name="catpre_num_notaria" class="java.lang.String"/>
+	<field name="catpre_lugar_escritura" class="java.lang.String"/>
+	<field name="catpre_fecha_reg_propiedad" class="java.sql.Date"/>
+	<field name="catdet_ocupacion" class="java.lang.Integer"/>
+	<field name="catdet_no_edificado" class="java.lang.Integer"/>
+	<field name="catdet_en_construccion" class="java.lang.Integer"/>
+	<field name="catpre_tiene_legalizacion" class="java.lang.Boolean"/>
+	<field name="catdet_caracteristicas_suelo" class="java.lang.Integer"/>
+	<field name="catdet_forma" class="java.lang.Integer"/>
+	<field name="catdet_topografia" class="java.lang.Integer"/>
+	<field name="catdet_localizacion" class="java.lang.Integer"/>
+	<field name="catpre_num_medidores_luz" class="java.lang.Integer"/>
+	<field name="catpre_num_medidores_agua" class="java.lang.Integer"/>
+	<field name="catpre_num_carriles_acceso" class="java.lang.Integer"/>
+	<field name="catpre_negocio_vivienda" class="java.lang.Boolean"/>
+	<field name="catdet_tipo_negocio" class="java.lang.Integer"/>
+	<field name="catdet_tipo_func_negocio" class="java.lang.Integer"/>
+	<field name="catdet_dimension" class="java.lang.Integer"/>
+	<field name="catdet_alicuotas" class="java.lang.Integer"/>
+	<field name="catpre_porc_vivienda" class="java.lang.Integer"/>
+	<field name="catpre_porc_bodega" class="java.lang.Integer"/>
+	<field name="catpre_porc_garage" class="java.lang.Integer"/>
+	<field name="catpre_porc_otros" class="java.lang.Integer"/>
+	<field name="catpre_linderos_definidos" class="java.lang.Boolean"/>
+	<field name="catdet_fuente_informacion" class="java.lang.Integer"/>
+	<field name="catpre_colaboracion_prop" class="java.lang.Boolean"/>
+	<field name="catpre_nombre_fuente" class="java.lang.String"/>
+	<field name="catpre_per_discapacidad" class="java.lang.Boolean"/>
+	<field name="catpre_disc_cicarnet" class="java.lang.String"/>
+	<field name="catpre_disc_nombre" class="java.lang.String"/>
+	<field name="catpre_disc_porc" class="java.lang.Integer"/>
+	<field name="catdet_doc_relevamiento" class="java.lang.Integer"/>
+	<field name="catpre_empadronador" class="java.lang.String"/>
+	<field name="catpre_empadronador_ci" class="java.lang.String"/>
+	<field name="catpre_supervisor" class="java.lang.String"/>
+	<field name="catpre_supervisor_ci" class="java.lang.String"/>
+	<field name="catpre_qcqa" class="java.lang.String"/>
+	<field name="usu_identificacion" class="java.lang.String"/>
+	<field name="ultacc_detalle" class="java.lang.String"/>
+	<field name="ultacc_marcatiempo" class="java.sql.Timestamp"/>
+	<field name="catpre_via_principal" class="java.lang.String"/>
+	<field name="catpre_interseccion" class="java.lang.String"/>
+	<field name="catpre_num_lote" class="java.lang.String"/>
+	<field name="catpre_num_bloques" class="java.lang.Integer"/>
+	<field name="catpre_num_pisos" class="java.lang.Integer"/>
+	<field name="catdet_parroquia" class="java.lang.Integer"/>
+	<field name="catdet_sector" class="java.lang.Integer"/>
+	<field name="catpre_otro_propietario" class="java.lang.String"/>
+	<field name="catpre_ident_predio" class="java.lang.String"/>
+	<field name="catpre_longitud_fondo" class="java.lang.Double"/>
+	<field name="catpre_num_fam_bloque" class="java.lang.Integer"/>
+	<detail>
+		<band height="156">
+			<staticText>
+				<reportElement x="7" y="56" width="90" height="13" uuid="f784bde3-dff4-4f8c-8038-a36ef1ab0740"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.2 MATERIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="2" width="63" height="13" uuid="9167bca9-f4f3-46b4-872a-01b564dca96f"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.1 USO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="231" y="2" width="115" height="13" uuid="b142e489-560f-4ec0-8614-433f11606a1d"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[3. ABASTECIMIENTO  AGUA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="234" y="78" width="82" height="13" uuid="d7f2848e-764c-4d26-a38e-8766834563d9"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[4. ALCANTARILLADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="2" width="90" height="13" uuid="5d18991e-b17d-40f5-90d2-3a6f67582a51"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.OTROS SERVICIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="2" width="63" height="13" uuid="6304bb32-61e9-4843-bdc3-eb1bf1591748"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.4 SENTIDO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="57" width="103" height="13" uuid="33bbbd4b-761e-4d53-b7ce-361f045dea49"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[2. ENERGIA ELECTRICA]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="11" y="70" width="87" height="82" uuid="2e0576e0-7f01-43ba-8657-fe6dae1bc550"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_b}+"/subRepDetInfMaterial.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="10" y="19" width="87" height="26" uuid="d20ca82a-9aed-4747-ad15-72ce6db7cd06"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_a}+"/subRepDetInfUso.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="114" y="71" width="103" height="82" uuid="afa8fd70-fe36-47f7-8bf6-f8a243e3b558"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_d}+"/subRepDetInfEnergiElec.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="114" y="19" width="108" height="27" uuid="e3e9cae8-acf7-47bc-a16d-de93b50f3bc8"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_c}+"/subRepDetInfSentido.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="243" y="90" width="99" height="64" uuid="9a288019-7a23-4a3a-b166-1cf61f7d639b"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_f}+"/subRepDetInfAlcan.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="238" y="18" width="103" height="51" uuid="7079c9f2-f7ab-48ab-9108-e300ce4a5bfa"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_e}+"/subRepDetInfAbaste.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="358" y="18" width="90" height="134" uuid="b4152d85-6f2f-4b88-a502-9f9a5c335a29"/>
+				<subreportParameter name="catpreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpreCodigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2_1_g}+"/subRepDetInfOtros.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="0" width="101" height="50" uuid="edefe988-66a6-4286-9f46-6e4cdd397d38"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="101" y="0" width="128" height="50" uuid="80794806-95c8-4770-bbb0-7a02cc3b38cb"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="50" width="101" height="105" uuid="ddd3538e-2aff-4cec-a822-43f6875fc595"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="101" y="50" width="128" height="105" uuid="6a10e187-d0cf-4fc5-89c0-b24c63b0373e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="229" y="0" width="119" height="72" uuid="2339af5b-2c6b-4ee3-be20-57b0600175af"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="348" y="0" width="106" height="155" uuid="7a635b2c-70ad-4ae2-84b5-84c40de8367b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="229" y="72" width="119" height="83" uuid="9998889d-4442-4383-af02-4f43f4b6a0a2"/>
+			</rectangle>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="repFichaCatastral" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="116a5cc7-4d59-4c7f-82a3-d5f771163037">
+	<property name="ireport.zoom" value="0.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="catpre_codigo" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="logo_gad" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR3" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR1_1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR1_2" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR1_3" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_2" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_a" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_c" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_d" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_e" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_f" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_g" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR3_1" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR3_2" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_b" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_i" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR2_1_h" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from sirec.catastro_predial where catpre_codigo=$P{catpre_codigo}]]>
+	</queryString>
+	<field name="catpre_codigo" class="java.lang.Integer"/>
+	<field name="catpre_cod_nacional" class="java.lang.String"/>
+	<field name="catpre_cod_local" class="java.lang.String"/>
+	<field name="catdet_tipo_via" class="java.lang.Integer"/>
+	<field name="catdet_tipo_ubicacion" class="java.lang.Integer"/>
+	<field name="catpre_numero" class="java.lang.String"/>
+	<field name="catpre_nombre_sector" class="java.lang.String"/>
+	<field name="catdet_tipo_prop1" class="java.lang.Integer"/>
+	<field name="catdet_tipo_prop2" class="java.lang.Integer"/>
+	<field name="catdet_ref_cartografica" class="java.lang.Integer"/>
+	<field name="catpre_coord_latitud" class="java.lang.Double"/>
+	<field name="catpre_coord_longitud" class="java.lang.Double"/>
+	<field name="catpre_longitud_frente_principal" class="java.lang.Double"/>
+	<field name="catpre_area_total" class="java.lang.Double"/>
+	<field name="catpre_area_total_esc" class="java.lang.Double"/>
+	<field name="catpre_area_total_cons" class="java.lang.Double"/>
+	<field name="catpre_colindante_norte" class="java.lang.String"/>
+	<field name="catpre_colindante_sur" class="java.lang.String"/>
+	<field name="catpre_colindante_este" class="java.lang.String"/>
+	<field name="catpre_colindante_oeste" class="java.lang.String"/>
+	<field name="catdet_dominio" class="java.lang.Integer"/>
+	<field name="catdet_traslacion_dominio" class="java.lang.Integer"/>
+	<field name="catpre_existe_escrituras" class="java.lang.Boolean"/>
+	<field name="catpre_num_notaria" class="java.lang.String"/>
+	<field name="catpre_lugar_escritura" class="java.lang.String"/>
+	<field name="catpre_fecha_reg_propiedad" class="java.sql.Date"/>
+	<field name="catdet_ocupacion" class="java.lang.Integer"/>
+	<field name="catdet_no_edificado" class="java.lang.Integer"/>
+	<field name="catdet_en_construccion" class="java.lang.Integer"/>
+	<field name="catpre_tiene_legalizacion" class="java.lang.Boolean"/>
+	<field name="catdet_caracteristicas_suelo" class="java.lang.Integer"/>
+	<field name="catdet_forma" class="java.lang.Integer"/>
+	<field name="catdet_topografia" class="java.lang.Integer"/>
+	<field name="catdet_localizacion" class="java.lang.Integer"/>
+	<field name="catpre_num_medidores_luz" class="java.lang.Integer"/>
+	<field name="catpre_num_medidores_agua" class="java.lang.Integer"/>
+	<field name="catpre_num_carriles_acceso" class="java.lang.Integer"/>
+	<field name="catpre_negocio_vivienda" class="java.lang.Boolean"/>
+	<field name="catdet_tipo_negocio" class="java.lang.Integer"/>
+	<field name="catdet_tipo_func_negocio" class="java.lang.Integer"/>
+	<field name="catdet_dimension" class="java.lang.Integer"/>
+	<field name="catdet_alicuotas" class="java.lang.Integer"/>
+	<field name="catpre_porc_vivienda" class="java.lang.Integer"/>
+	<field name="catpre_porc_bodega" class="java.lang.Integer"/>
+	<field name="catpre_porc_garage" class="java.lang.Integer"/>
+	<field name="catpre_porc_otros" class="java.lang.Integer"/>
+	<field name="catpre_linderos_definidos" class="java.lang.Boolean"/>
+	<field name="catdet_fuente_informacion" class="java.lang.Integer"/>
+	<field name="catpre_colaboracion_prop" class="java.lang.Boolean"/>
+	<field name="catpre_nombre_fuente" class="java.lang.String"/>
+	<field name="catpre_per_discapacidad" class="java.lang.Boolean"/>
+	<field name="catpre_disc_cicarnet" class="java.lang.String"/>
+	<field name="catpre_disc_nombre" class="java.lang.String"/>
+	<field name="catpre_disc_porc" class="java.lang.Integer"/>
+	<field name="catdet_doc_relevamiento" class="java.lang.Integer"/>
+	<field name="catpre_empadronador" class="java.lang.String"/>
+	<field name="catpre_empadronador_ci" class="java.lang.String"/>
+	<field name="catpre_supervisor" class="java.lang.String"/>
+	<field name="catpre_supervisor_ci" class="java.lang.String"/>
+	<field name="catpre_qcqa" class="java.lang.String"/>
+	<field name="usu_identificacion" class="java.lang.String"/>
+	<field name="ultacc_detalle" class="java.lang.String"/>
+	<field name="ultacc_marcatiempo" class="java.sql.Timestamp"/>
+	<field name="catpre_via_principal" class="java.lang.String"/>
+	<field name="catpre_interseccion" class="java.lang.String"/>
+	<field name="catpre_num_lote" class="java.lang.String"/>
+	<field name="catpre_num_bloques" class="java.lang.Integer"/>
+	<field name="catpre_num_pisos" class="java.lang.Integer"/>
+	<field name="catdet_parroquia" class="java.lang.Integer"/>
+	<field name="catdet_sector" class="java.lang.Integer"/>
+	<field name="catpre_otro_propietario" class="java.lang.String"/>
+	<field name="catpre_ident_predio" class="java.lang.String"/>
+	<field name="catpre_longitud_fondo" class="java.lang.Double"/>
+	<field name="catpre_num_fam_bloque" class="java.lang.Integer"/>
+	<title>
+		<band height="1" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="595" height="0" uuid="bba3295c-5fe1-4c41-bcfb-bc5d921fe854"/>
+				<subreportParameter name="codigoCatPredial">
+					<subreportParameterExpression><![CDATA[$P{catpre_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="logGAD">
+					<subreportParameterExpression><![CDATA[$P{logo_gad}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR1_1">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR1_1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR1_2">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR1_2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR1_3">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR1_3}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR1}+"/fiCatSubRepPrt1_2_3Orden1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</title>
+	<detail>
+		<band height="1" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="595" height="0" uuid="ea61cecd-a54e-42fe-8885-076fcca28c40"/>
+				<subreportParameter name="SUBREPORT_DIR2_1_b">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_b}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_a">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_a}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_d">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_d}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="codigoCatPredial">
+					<subreportParameterExpression><![CDATA[$P{catpre_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_2">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_c">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_c}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_i">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_i}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_f">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_f}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_e">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_e}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_h">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_h}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR2_1_g">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR2_1_g}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR2}+"/fiCatSubRepPrtUsoSueloOrden2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="1" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="595" height="0" uuid="f84b0145-5344-4233-a209-05e10991d7ae"/>
+				<subreportParameter name="SUBREPORT_DIR3_2">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR3_2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR3_1">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR3_1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="catPreCodigo">
+					<subreportParameterExpression><![CDATA[$P{catpre_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR3}+"/fiCatSubRepPrtEdificaOrden3.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

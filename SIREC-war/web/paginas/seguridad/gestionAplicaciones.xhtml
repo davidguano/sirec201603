@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <h:form id="frmGestionAplicacion">   
+                <p:growl id="msgs" showDetail="true"/>
+                <center>
+                    <h:panelGrid id="panelContieneAplicacion" width="1000" columns="1" >
+                        <p:panel header="#{txt.lbl_administra_aplicaciones}">
+                            <h:panelGrid columns="3">
+                                <p:outputLabel value="#{txt.text_nom}"/>
+                                <p:inputText   id="aplNom" value="#{gestionAplicacionControlador.aplicacionActual.apliNombre}"  
+                                               size="40"   />
+                                <p:message for="aplNom"/>                                                       
+                                <p:outputLabel value="#{txt.text_nombre_nemonico}"/>
+                                <p:inputText   id="aplNomNem"  value="#{gestionAplicacionControlador.aplicacionActual.apliNemonico}" 
+                                               maxlength="20" size="40"/>
+                                <p:message for="aplNomNem"/>
+                                <p:outputLabel value="#{txt.text_tipo_logeo}"/>
+                                <p:selectOneMenu  id="aplTipLog"  value="#{gestionAplicacionControlador.aplicacionActual.apliTipoLogeo}" 
+                                             >
+                                    <f:selectItem itemLabel="Normal" itemValue="N"/>
+                                    <f:selectItem itemLabel="Complejo" itemValue="C"/>
+                                </p:selectOneMenu>
+                                <p:message for="aplTipLog"/>
+                                <p:outputLabel value="#{txt.text_url_pag_per}"/>
+                                <p:inputText    id="urlPagIni"  value="#{gestionAplicacionControlador.aplicacionActual.apliUrlInicio}" 
+                                                size="40"/>
+                                <p:message for="urlPagIni"/>
+                                <p:outputLabel value="#{txt.text_estado}"/>
+                                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                    <p:selectBooleanCheckbox  value="#{gestionAplicacionControlador.aplicacionActual.apliEstado}" >
+                                    </p:selectBooleanCheckbox>
+                                </h:panelGrid>
+                                <h:column></h:column>
+                                <p:outputLabel value="#{txt.text_apl_icono}"/>
+                                <p:inputText  id="aplIcon"  value="#{gestionAplicacionControlador.aplicacionActual.apliIcono}" 
+                                              maxlength="20" size="40"/>
+                                <p:message for="aplIcon"/>
+                                <center>
+                                    <h:panelGrid columns="2">
+                                        <p:commandButton value="#{txt.btn_guardar_global}" 
+                                                         id="btnGuardar" 
+                                                         action="#{gestionAplicacionControlador.guardarAplicacion()}" 
+                                                         icon="ui-icon-disk"  
+                                                         process="@this,panelContieneAplicacion" 
+                                                         update=":frmGestionAplicacion:panelConieneListas,panelContieneAplicacion,msgs"
+                                                         async="true"
+                                                         global="false"
+
+                                                         />
+                                        <p:commandButton value="#{txt.btn_nuevo}" 
+                                                         ajax="false"
+                                                         id="btnNuevo" 
+                                                         action="#{gestionAplicacionControlador.refrescaNuevo()}" 
+                                                         icon="ui-icon-document"  
+                                                         process="@this,panelContieneAplicacion" 
+                                                         update=":frmGestionAplicacion:panelConieneListas,panelContieneAplicacion,msgs"
+                                                         async="true"
+                                                         global="false"
+                                                         />
+                                    </h:panelGrid>
+                                </center>
+                            </h:panelGrid>
+                        </p:panel>
+                    </h:panelGrid>
+
+
+                    <h:panelGrid id="panelConieneListas">
+                        <h:panelGrid id="panelListAplicacion" columns="1" width="800" styleClass="hpanelGrid_font">
+                            <p:dataTable paginator="true" rows="10" id="tablaListAplicacion" value="#{gestionAplicacionControlador.listadoAplicaciones}"  var="aplColumna"   
+                                         selectionMode="single" rowKey="#{aplColumna.apliCodigo}"
+                                         styleClass="pdataTable_font"
+                                         currentPageReportTemplate="{currentPage} de {totalPages}">  
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{txt.lbl_listado_apl}" style="font-size:15px;"/>
+                                </f:facet>
+                                <p:column filterBy="#{aplColumna.apliCodigo}" headerText="#{txt.lbl_codigo}" width="100" style="font-size:12px;">
+                                    <h:outputText value="#{aplColumna.apliCodigo}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column filterBy="#{aplColumna.apliNombre}" headerText="#{txt.lbl_aplicacion}" width="100" style="font-size:12px;">
+                                    <h:outputText value="#{aplColumna.apliNombre}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column headerText="#{txt.lbl_nom_nem}" width="150" style="font-size:12px;">
+                                    <h:outputText value="#{aplColumna.apliNemonico}" style="font-size:12px;" />
+                                </p:column>  
+                                <p:column headerText="#{txt.lbl_estado}" width="150" style="font-size:12px;">
+                                    <p:selectBooleanCheckbox disabled="true"  value="#{aplColumna.apliEstado}" >
+                                    </p:selectBooleanCheckbox>
+                                </p:column>
+                                <p:column headerText="#{txt.lbl_url_pagina}" width="150" style="font-size:12px;">
+                                    <h:outputText value="#{aplColumna.apliUrlInicio}" style="font-size:12px;" />
+                                </p:column>
+                                <p:column headerText="#{txt.btn_editar_global}" style="width:50px;text-align: center;font-size:12px;" >
+                                    <p:commandButton   style="font-size:12px;" icon="ui-icon-pencil"  action="#{gestionAplicacionControlador.recuperarAplicacionCampos(aplColumna)}" 
+                                                       process="@this" update=":frmGestionAplicacion:panelContieneAplicacion,:frmGestionAplicacion:panelConieneListas,:frmGestionAplicacion:msgs" async="true" global="false">
+                                    </p:commandButton>
+                                </p:column>
+                                <p:column headerText="#{txt.btn_eliminar_global}" style="width:50px;text-align: center;font-size:12px;" >
+                                    <p:commandButton style="font-size:12px;" icon="ui-icon-trash"  
+                                                     actionListener="#{gestionAplicacionControlador.confirmaEliminar(aplColumna)}" 
+                                                     process="@this" update=":frmGestionAplicacion:panelConieneListas,:frmGestionAplicacion:message" async="true" global="false">
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar el registro?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>                      
+                        </h:panelGrid>
+                        <p:growl id="message" showDetail="true" />
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </h:panelGrid>
+                </center>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <!--FICHA DE IMPUESTO PREDIAL-->
+            <h:form id="frmImpPredial">   
+                <p:growl id="msgs" showDetail="true"/>
+                <center>
+                    
+                     <p:outputLabel id="preExiste" value="Existe exoneración, recargo o deducción que aplicar al predio?"/>                                                                                       
+                                        <p:selectBooleanCheckbox id="preExisteChk"
+                                                                 value="#{gestionImpuestoPredialControlador.existe}">
+                                            <p:ajax event="change"                                                                                   
+                                                        process="@this" update=":frmImpPredial:tabImpPred:" async="true" global="false"/>
+                                        </p:selectBooleanCheckbox>
+                                        <p:message for="preExiste"/> 
+                    
+                    <p:tabView id="tabImpPred" style="font-size:13px">
+                        <p:ajax event="tabChange" />
+                        <p:tab title="#{txt.impuesto_predial}" rendered="#{gestionImpuestoPredialControlador.existe==true}">
+                            <ui:include src="gestionImpuestoPredialExoRecarDeduc.xhtml" />
+                        </p:tab>
+                        <p:tab title="#{txt.DETERMINACION_EMISION}">
+                            <ui:include src="gestionImpuestoPredialDeterminacionEmision.xhtml" />
+                        </p:tab>                       
+                    </p:tabView>
+
+                </center>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

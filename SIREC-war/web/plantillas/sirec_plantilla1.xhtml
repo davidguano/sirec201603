@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <f:view contentType="text/html" locale="es">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/js/sirec.js" ></script>
+            <link href="${facesContext.externalContext.requestContextPath}/css/sirec_css.css" rel="stylesheet" type="text/css" />
+            <title>SIREC</title>
+        </h:head>
+        <h:body>
+            <div id="container">
+                <div id="top">
+                    <ui:insert name="header">
+                        <ui:include src="/plantillas/cabecera.xhtml" />  
+                    </ui:insert>
+                    <ui:insert name="top">
+                        <ui:include src="/plantillas/menu.xhtml" />  
+                    </ui:insert>
+                </div>
+                <p:separator id="sepCab" style="width: 100%;"/>
+                <div>
+                    <div id="left">
+                        <ui:insert name="left">
+
+
+                        </ui:insert>
+                    </div>
+                    <div>
+                        <div id="right">
+                            <ui:insert name="right">
+
+                            </ui:insert>
+                        </div>
+                        <ui:include src="/plantillas/status.xhtml"/>
+                        <ui:include src="/plantillas/status_gif.xhtml"/>
+                        <div id="content" class="right_content">
+                            <ui:insert name="contenido">
+
+                            </ui:insert>
+                        </div>
+                    </div>
+                </div>
+                <div id="bottom">
+                    <ui:insert name="bottom">
+                        <ui:include src="/plantillas/pie.xhtml"/>
+                        <ui:include src="/plantillas/timeOut.xhtml"/>
+                        <ui:include src="/plantillas/navegacion.xhtml"/>
+                    </ui:insert>
+                </div>
+            </div>
+
+        </h:body>
+    </f:view>
+
+</html>

@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:psirec="http://java.sun.com/jsf/composite/psirec">
+    <!--EMISION DE PATERNTES-->
+
+    <center>
+        <h:panelGrid id="pnlConEmiPatente" width="500" columns="1" >
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <p:panel header="Seleccione una opción de Busqueda:">
+                <p:selectOneRadio id="console" value="#{gestionEmisionPatenteControlador.busOpcion}">
+                    <f:selectItem itemLabel="Patente" itemValue="#{1}" />
+                    <f:selectItem itemLabel="Parroquia" itemValue="#{2}" />
+                    <f:selectItem itemLabel="Global" itemValue="#{3}" />
+                    <p:ajax update="pnlConOptBusquedas" listener="#{gestionEmisionPatenteControlador.buscaSelecciona()}" process="@this" ></p:ajax>
+                </p:selectOneRadio>
+                    </p:panel>
+            </h:panelGrid>
+            <p:panel header="#{txt.lbl_header_emi_pat}">
+                <h:panelGrid id="pnlConEmisionPatente" columns="2">
+                    <h:panelGrid columns="3" id="pnlConOptBusquedas">
+                        <h:panelGrid columns="1">    
+                            <h:outputLabel style="font-size: #{txt.font_size}" value="#{txt.lbl_anio}"/>
+                            <p:selectOneMenu requiredMessage="#{txt.lbl_anio} Se necesita un valor"   required="true" id="cmbEmiAnio" 
+                                             value="#{gestionEmisionPatenteControlador.catDetAnio}" style="width:250px"
+                                             converter="#{catalogoDetalleConverter}" var="t">
+                                <f:selectItem  itemLabel="Seleccione..." itemValue="" /> 
+                                <f:selectItems var="tipTem"  
+                                               value="#{gestionEmisionPatenteControlador.listAnios}" 
+                                               itemLabel="#{tipTem.catdetTexto}" 
+                                               itemValue="#{tipTem}"/> 
+                                <p:column width="200" style="white-space: normal">  
+                                    <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                </p:column> 
+                            </p:selectOneMenu>                               
+                            <p:message for="cmbEmiAnio" display="icon"/>
+                        </h:panelGrid>
+
+                        <p:outputLabel rendered="#{gestionEmisionPatenteControlador.verBusPatente==1}" style="font-size: #{txt.font_size}" value="#{txt.lbl_clave_patente} AE-MPM-"/>
+                        <p:inputText rendered="#{gestionEmisionPatenteControlador.verBusPatente==1}" id="txtClavePat" required="true" requiredMessage="#{txt.lbl_clave_patente} Se necesita un valor"  value="#{gestionEmisionPatenteControlador.patenteActual.patCodigo}" 
+                                      maxlength="20" size="40"/>
+                        <p:message rendered="#{gestionEmisionPatenteControlador.verBusPatente==1}" for="txtClavePat" display="icon"/>
+
+                        <p:outputLabel rendered="#{gestionEmisionPatenteControlador.verBusParroquias==1}"  style="font-size: #{txt.font_size}" value="#{txt.lbl_parroquia}"/>
+                        <p:selectOneMenu  rendered="#{gestionEmisionPatenteControlador.verBusParroquias==1}"  required="true" id="cmbParroquia" requiredMessage="#{txt.lbl_parroquia} Se necesita un valor"
+                                           value="#{gestionEmisionPatenteControlador.catDetParroquias}" style="width:250px"
+                                           converter="#{catalogoDetalleConverter}" var="t">
+                            <f:selectItem  itemLabel="Seleccione..." itemValue=""/> 
+                            <f:selectItems var="tipTem"  
+                                           value="#{gestionEmisionPatenteControlador.listDetParroquias}" 
+                                           itemLabel="#{tipTem.catdetTexto}" 
+                                           itemValue="#{tipTem}"/> 
+                            <p:column width="200" style="white-space: normal">  
+                                <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                            </p:column> 
+                        </p:selectOneMenu>                               
+                        <p:message for="cmbParroquia" rendered="#{gestionEmisionPatenteControlador.verBusParroquias==1}" display="icon"/>
+
+                         
+                    </h:panelGrid>
+                    <psirec:panelInformativo  rendered="#{gestionEmisionPatenteControlador.numPatente==null}" id="infEmiPatente" background="#042B69" ancho="220" icono="fa-exclamation-triangle"
+                                              titulo="#{txt.lbl_head_error_patente}" tamanioTitulo="15" colorTitulo="white"
+                                              texto="#{txt.lbl_sin_resultados}" tamanioTexto="12" colorTexto="white"/>
+                </h:panelGrid>
+
+
+
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="#{txt.btn_cargar_infor}" 
+                                     id="btnEmision" 
+                                     action="#{gestionEmisionPatenteControlador.listarEmisionPatente()}" 
+                                     icon="ui-icon-search"  
+                                     process="@this,pnlConEmiPatente" 
+                                     update=":frmPat:tabPrin:pnlConListEmision,:frmPat:tabPrin:pnlConEmisionPatente,:frmPat:msgs"
+                                     async="true"
+                                     global="false"
+                                     />
+                    <p:commandButton value="#{txt.btn_nuevo}" 
+                                     id="btNuevo" 
+                                     action="#{gestionEmisionPatenteControlador.inicializar()}" 
+                                     icon="ui-icon-document"  
+                                     process="@this,pnlConEmiPatente" 
+                                     update=":frmPat:tabPrin:pnlConListEmision,:frmPat:tabPrin:pnlConEmisionPatente"
+                                     async="true"
+                                     global="false"
+                                     />
+
+                </h:panelGrid>
+                <p:panel>
+                    <h:panelGrid id="pnlConListEmision">
+                        <p:dataTable rendered="#{gestionEmisionPatenteControlador.listaEmisionPatente.size()>0}" id="listaDatosCapturados" var="car" value="#{gestionEmisionPatenteControlador.listaEmisionPatente}" scrollable="true" scrollHeight="200" scrollWidth="1000" widgetVar="carsTable"  >                    
+                            <p:column width="60" headerText="#{txt.lbl_emi_clave_pat}">
+                                <h:outputText value="AE-MPM-#{car[0]}" />
+                            </p:column>
+                            <p:column width="200" headerText="#{txt.lbl_emi_nom_contri}">
+                                <h:outputText value="#{car[1]}" />
+                            </p:column>
+                            <p:column width="60" headerText="#{txt.lbl_emi_ruc}">
+                                <h:outputText value="#{car[2]}" />
+                            </p:column>
+                            <p:column width="250" headerText="#{txt.lbl_emi_direccion}">
+                                <h:outputText value="#{car[3]}" />
+                            </p:column>
+                            <p:column width="150" headerText="#{txt.lbl_emi_parroquia}">
+                                <h:outputText value="#{car[4]}" />
+                            </p:column>
+                            <p:column width="20" headerText="#{txt.lbl_emi_anio}">
+                                <h:outputText value="#{car[5]}" />
+                            </p:column>
+                            <p:column width="60" headerText="#{txt.lbl_emi_patri}">
+                                <h:outputText value="#{car[6]}" />
+                            </p:column>
+                            <p:column width="50" headerText="#{txt.lbl_emi_imp}">
+                                <h:outputText value="#{car[7]}" />
+                            </p:column>
+                            <p:column width="60" headerText="#{txt.lbl_emi_bomb}">
+                                <h:outputText value="#{car[8]}" />
+                            </p:column>
+                            <p:column width="60" headerText="#{txt.lbl_emi_tasa_proc}">
+                                <h:outputText value="#{car[9]}" />
+                            </p:column>
+                            <p:column width="60" headerText="#{txt.lbl_emi_tot_patente}">
+                                <h:outputText value="#{car[10]}" />
+                            </p:column>
+                            <p:column width="50" headerText="#{txt.lbl_emi_bas_imp}">
+                                <h:outputText value="#{car[11]}" />
+                            </p:column>
+                            <p:column width="50" headerText="#{txt.lbl_emi_imporMil}">
+                                <h:outputText value="#{car[12]}" />
+                            </p:column>
+                            <p:column width="50" headerText="#{txt.lbl_emi_tas_proc_mil}">
+                                <h:outputText value="#{car[13]}" />
+                            </p:column>
+                            <p:column width="40" headerText="#{txt.lbl_emi_tot_porMil}">
+                                <h:outputText value="#{car[14]}" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:commandButton value="#{txt.PRE_EMISION_btn}" rendered="#{gestionEmisionPatenteControlador.listaEmisionPatente.size()>0}"
+                                         id="btnPreEmi" ajax="false" immediate="true">
+                            <p:dataExporter type="xlsx" target="listaDatosCapturados" fileName="Emision_Pate_1.5xMil" postProcessor="#{gestionEmisionPatenteControlador.postProcessXLS}"/>
+                        </p:commandButton>   
+                    </h:panelGrid>
+                </p:panel>
+            </p:panel>
+        </h:panelGrid>                      
+    </center>
+</html>

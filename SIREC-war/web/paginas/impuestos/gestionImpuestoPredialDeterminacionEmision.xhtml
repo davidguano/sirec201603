@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <center>
+        <h:panelGrid id="panelContieneAplicacion2" width="1000" columns="1" >                                                 
+            <p:panel style="background: #8BBAC9;">                                
+
+                <h:panelGrid id="panelIngreso" columns="2">
+
+
+                    <p:outputLabel value="Criterio de busqueda:"/>  
+                    <p:selectOneMenu id="cmbCriterio" value="#{gestionImpuestoPredialControlador.criterio}" style="width:152px">
+                        <f:selectItem itemLabel="Seleccione..." itemValue="" />                        
+                        <f:selectItem itemLabel="#{txt.clave_catastral}" itemValue="C" />
+                        <f:selectItem itemLabel="#{txt.parroquia}" itemValue="P" />
+                        <f:selectItem itemLabel="#{txt.sector}" itemValue="S" />
+                        <f:selectItem itemLabel="#{txt.Manzana}" itemValue="M" />
+                        <f:selectItem itemLabel="#{txt.Todo}" itemValue="T" />
+                        <p:ajax event="change" process="@this" update="frmImpPredial:tabImpPred:panelIngreso" async="true" global="false"/>  
+                    </p:selectOneMenu>
+
+                    
+                    <br></br>
+                    <br></br>
+
+                    <p:selectOneMenu id="PorCalve" value="#{gestionImpuestoPredialControlador.catastroPredialActual}" converter="#{catastroPredialConverter}" panelStyle="width:200px"
+                                     effect="fade" var="t" style="width:220px" filter="true" filterMatchMode="startsWith"
+                                     rendered="#{gestionImpuestoPredialControlador.criterio=='C'}"
+                                     >
+                        <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                        <f:selectItems value="#{gestionImpuestoPredialControlador.listaCatastroPredialClavesCatastrales}" 
+                                       var="theme" 
+                                       itemLabel="#{theme.catpreCodNacional}#{theme.catpreCodLocal}"
+                                       itemValue="#{theme}" />
+                        <p:column>
+                            <h:outputText value="#{t.catpreCodNacional}#{t.catpreCodLocal}"/>
+                        </p:column>                       
+                    </p:selectOneMenu>
+                    
+                    
+                     <p:selectOneMenu id="PorParroq" value="#{gestionImpuestoPredialControlador.catalogoParroquia}" panelStyle="width:180px"
+                                  converter="#{catalogoDetalleConverter}" var="t" style="width:220px"
+                                  rendered="#{gestionImpuestoPredialControlador.criterio=='P' or gestionImpuestoPredialControlador.criterio=='S'}">
+                                            <f:selectItem itemLabel="Seleccione Parroquia..." itemValue="" /> 
+                                            <f:selectItems var="tipo" 
+                                                           value="#{gestionImpuestoPredialControlador.listaParroquias}" 
+                                                           itemLabel="#{tipo.catdetTexto}" 
+                                                           itemValue="#{tipo}"/> 
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                            </p:column>
+                                             <p:ajax listener="#{gestionImpuestoPredialControlador.listarSectores()}"
+                                                     process="@this" update=":frmImpPredial:tabImpPred:PorSec" async="true" global="false" />  
+                    </p:selectOneMenu>
+                    
+                     <br></br>
+                    
+                    <p:selectOneMenu id="PorSec" value="#{gestionImpuestoPredialControlador.catalogoSector}" panelStyle="width:180px"
+                                  converter="#{catalogoDetalleConverter}" var="t" style="width:220px"
+                                  rendered="#{gestionImpuestoPredialControlador.criterio=='S'}">
+                                            <f:selectItem itemLabel="Seleccione Sector..." itemValue="" /> 
+                                            <f:selectItems var="tipo" 
+                                                           value="#{gestionImpuestoPredialControlador.listaSectores}" 
+                                                           itemLabel="#{tipo.catdetTexto}" 
+                                                           itemValue="#{tipo}"/> 
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                            </p:column>                         
+                    </p:selectOneMenu>
+                    
+                </h:panelGrid>   
+                
+                 <h:panelGrid id="pnlProAnio" columns="3">                                                       
+                                <p:outputLabel value="#{txt.anio}"/>
+                                <p:selectOneMenu id="porAnio" style="width:152px" value="#{gestionImpuestoPredialControlador.anioPr}"
+                                                 required="true"> 
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                            <f:selectItem itemLabel="2015" itemValue="2015" />
+                                            <f:selectItem itemLabel="2016" itemValue="2016" />          
+                                            <f:selectItem itemLabel="2017" itemValue="2017" />                                            
+                                        </p:selectOneMenu>                                                                       
+                                </h:panelGrid> 
+                
+                <h:panelGrid id="pnlEjeVal" >
+                    <p:commandButton value="#{txt.EJECUTAR_VALORACION_btn}" 
+                                     id="btnEjeVal" 
+                                     action="#{gestionImpuestoPredialControlador.ejecutarValoracion()}" 
+                                     icon="ui-icon-disk"  
+                                     process="@this, panelIngreso, pnlProAnio" 
+                                     update=":frmImpPredial:tabImpPred:pnllstVal"
+                                     async="true"
+                                     global="false"                                     
+                                     />
+                   <h:panelGrid  id="pnllstVal" >
+                        <p:dataTable id="lstVals" value="#{gestionImpuestoPredialControlador.listaEjecutarValoracion}"  var="catastroP"  
+                                     rows="10"                                                                              
+                                     paginator="true"
+                                      emptyMessage="No se han encontrado valoraciones!"
+                                     >                                                                                    
+                            <f:facet name="header">
+                                <p:outputLabel value="Lista de Valoraciones" style="font-size:10px;"/>
+                            </f:facet>
+                            <p:column headerText="#{txt.clave_catastral}" width="80" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catpreClaveCatastal}" style="font-size:10px;" />
+                            </p:column>
+                            <p:column headerText="#{txt.nombre_razón_social}" width="80" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.proCi.proRazonSocial}"  style="font-size:10px;" />
+                            </p:column>    
+                            <p:column headerText="#{txt.ruc_ci}" width="50" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.proCi.proCi}"  style="font-size:10px;" />
+                            </p:column>
+                            <p:column headerText="#{txt.parroquia_t}" width="50" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredial.catdetParroquia.catdetTexto}"  style="font-size:10px;" />
+                            </p:column>                            
+                            <p:column headerText="#{txt.dirección}" width="50" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.proCi.proDireccion}"  style="font-size:10px;"/>
+                            </p:column> 
+                              <p:column headerText="#{txt.anio_t}" width="20" style="font-size:10px;"> 
+                                  <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalAnio}"  style="font-size:10px;"/>
+                            </p:column>                            
+                            <p:column headerText="#{txt.area_de_terreno}" width="50" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catpreAreaTotal}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.area_de_construccion}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catpreAreaTotalCons}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.avaluo_terreno}" width="40"  style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalAvaluoTerr}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.avaluo_edificación}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalAvaluoEdif}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.valor_propiedad}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalValorPropieda}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.base_imponible}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalBaseImponible}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.impuesto}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalImpuesto}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.bomberos}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalBomberos}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.solar_no_edificado}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalSolarNoedificado}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.tasa_administrativa}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalTasaAdm}"  style="font-size:10px;"/>
+                            </p:column>                                                                                    
+                            <p:column headerText="#{txt.recargos}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.totalRecargos}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.deducciones}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.totalDeduciones}"  style="font-size:10px;"/>
+                            </p:column>
+                            <p:column headerText="#{txt.exoneración}" width="40" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.totalExoneracion}"  style="font-size:10px;"/>
+                            </p:column>     
+
+                            <p:column headerText="#{txt.total}" width="50" style="font-size:10px;"> 
+                                <h:outputText value="#{catastroP.totalRegistro}"  style="font-size:10px;"/>
+                            </p:column>  
+
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column colspan="19" style="text-align:right" footerText="Total:" />
+                                    <p:column footerText="#{gestionImpuestoPredialControlador.totalTotal}" />                                                      
+                                </p:row>
+                            </p:columnGroup>                                                                                                                                    
+                        </p:dataTable>
+
+                   </h:panelGrid> 
+                    
+                    <h:panelGrid columns="2">
+                        
+                         <p:commandButton value="#{txt.PRE_EMISION_btn}" 
+                                     id="btnPreEmi" ajax="false" immediate="true">
+                        <p:dataExporter type="xlsx" target="lstVals" fileName="Pre_Emision_Valoracion" postProcessor="#{gestionImpuestoPredialControlador.postProcessXLS}"/>
+                    </p:commandButton>                                                                       
+                    <p:commandButton value="#{txt.EMISION_btn}" 
+                                     id="btnEmi"
+                                     ajax="false"                                     
+                                     action="#{gestionImpuestoPredialControlador.emision()}"                                      
+                                     icon="ui-icon-disk"  
+                                     process="@this, panelIngreso" 
+                                     update=":frmImpPredial:tabImpPred:pnllstVal, :frmImpPredial:msgs"
+                                     async="true"
+                                     global="false"
+                                     immediate="true"
+                                     >
+                        <p:dataExporter type="xlsx" target="lstVals" fileName="Emision_Valoracion" postProcessor="#{gestionImpuestoPredialControlador.postProcessXLS}"/>
+                    </p:commandButton>                                                                        
+                    </h:panelGrid>                                                                                            
+                </h:panelGrid>                                                                                                                                                                                                                                                 
+            </p:panel>                                                                                                                                                                                                     
+        </h:panelGrid>
+    </center>
+</html>    

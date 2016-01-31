@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/plantillas/sirec_plantilla1.xhtml">
+        <ui:define name="contenido">
+            <center>
+                <h:form id="frmPropietario" style="font-size: 12px;">         
+                    <p:growl id="msgs" showDetail="true"/>
+                    <p:panel  header="Registro de Propietario">
+                        <h:panelGrid id="pnlProp" columns="6">
+                            <h:outputLabel value="Tipo:" for="proTipoPersona" />
+                            <p:selectOneMenu id="proTipoPersona" value="#{propietarioControlador.propietarioActual.proTipoPersona}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                <f:selectItem itemLabel="Natural" itemValue="N"/>
+                                <f:selectItem itemLabel="Juridica" itemValue="J"/>
+                                <p:ajax event="change"  async="true"
+                                        global="false"
+                                        process="@this"
+                                        update="pnlProCi,proRazonSocial,proDiscapacidad,proApellidos,proNombres,proFechaNacimiento,proTipoPerJur"/>
+                            </p:selectOneMenu>
+                            <p:message for="proTipoPersona"/>
+                            <h:outputLabel value="Tipo Persona Juridica:" for="proTipoPerJur" />
+                            <p:selectOneMenu id="proTipoPerJur" value="#{propietarioControlador.propietarioActual.catdetTipoperjur.catdetCodigo}"
+                                             disabled="#{propietarioControlador.propietarioActual.proTipoPersona=='N'}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue="#{null}"/>
+                                <f:selectItems value="#{propietarioControlador.listaCatTipoPersonaJuridica}" var="tip"
+                                               itemLabel="#{tip.catdetTexto}" itemValue="#{tip.catdetCodigo}"/>
+                            </p:selectOneMenu>
+                            <p:message for="proTipoPerJur"/>
+                            
+                            
+                            <h:outputLabel value="Cédula/RUC:"/>
+                            <h:panelGrid id="pnlProCi">
+                                <f:verbatim rendered="#{propietarioControlador.propietarioActual.proTipoPersona==null}"/>
+                            <p:inputText id="proCi" value="#{propietarioControlador.propietarioActual.proCi}" 
+                                         maxlength="10" title="ProCi" required="true" requiredMessage="Identificacion requerida."
+                                         rendered="#{propietarioControlador.propietarioActual.proTipoPersona=='N'}">
+                                <p:ajax event="blur" async="true" global="false"
+                                        listener="#{propietarioControlador.validarCedulaRuc}"
+                                        process="@this"
+                                        update="@this,:frmPropietario:msgs"/>
+                            </p:inputText>
+                                <p:inputText id="proRuc" value="#{propietarioControlador.propietarioActual.proCi}" 
+                                         maxlength="13" title="ProCi" required="true" requiredMessage="Identificacion requerida."
+                                         rendered="#{propietarioControlador.propietarioActual.proTipoPersona=='J'}">
+                                <p:ajax event="blur" async="true" global="false"
+                                        listener="#{propietarioControlador.validarCedulaRuc}"
+                                        process="@this"
+                                        update="@this,:frmPropietario:msgs"/>
+                            </p:inputText>
+                            </h:panelGrid>
+                            <p:message for="proCi" rendered="#{propietarioControlador.propietarioActual.proTipoPersona=='N'}"/>
+                            <p:message for="proRuc" rendered="#{propietarioControlador.propietarioActual.proTipoPersona=='J'}"/>
+                            <f:verbatim rendered="#{propietarioControlador.propietarioActual.proTipoPersona==null}"/>
+                            <h:outputLabel value="Apellidos:" for="proApellidos" />
+                            <p:inputText id="proApellidos" 
+                                         value="#{propietarioControlador.propietarioActual.proApellidos}" 
+                                         title="ProApellidos" 
+                                         size="50" onkeyup="value = value.toUpperCase();" 
+                                         disabled="#{propietarioControlador.propietarioActual.proTipoPersona=='J'}"
+                                         maxlength="200" requiredMessage="Apellidos son requeridos"/>
+                            <p:message for="proApellidos"/>
+                            <h:outputLabel value="Nombres:" for="proNombres" />
+                            <p:inputText id="proNombres" 
+                                         value="#{propietarioControlador.propietarioActual.proNombres}" 
+                                         maxlength="200" 
+                                         size="50" onkeyup="value = value.toUpperCase();" 
+                                         disabled="#{propietarioControlador.propietarioActual.proTipoPersona=='J'}"
+                                         title="ProNombres" requiredMessage="Nombres son requeridos"/>
+                            <p:message for="proNombres"/>
+                            <h:outputLabel value="Fecha de Nacimiento:" for="proFechaNacimiento" />
+                            <p:calendar id="proFechaNacimiento" 
+                                        value="#{propietarioControlador.propietarioActual.proFechaNacimiento}" 
+                                        title="ProFechaNacimiento" 
+                                        disabled="#{propietarioControlador.propietarioActual.proTipoPersona=='J'}"
+                                        requiredMessage="Fecha de Nacimiento es requerida"
+                                        pattern="dd-MM-yyyy">
+                            </p:calendar>
+                            <p:message for="proFechaNacimiento"/>
+                            <h:outputLabel value="Razon Social:" for="proRazonSocial" />
+                            <p:inputText id="proRazonSocial" 
+                                         size="50"
+                                         disabled="#{propietarioControlador.propietarioActual.proTipoPersona=='N'}"
+                                         value="#{propietarioControlador.propietarioActual.proRazonSocial}" title="ProRazonSocial" />
+                            <p:message for="proRazonSocial"/>
+                            <h:outputLabel value="Direccion:" for="proDireccion" />
+                            <p:inputTextarea id="proDireccion" onkeyup="value = value.toUpperCase();" 
+                                             value="#{propietarioControlador.propietarioActual.proDireccion}" 
+                                             title="ProDireccion"
+                                             cols="50" rows="2"/>
+                            <p:message for="proDireccion"/>
+                            <h:outputLabel value="Telefono:" for="proTelefono" />
+                            <p:inputText id="proTelefono" 
+                                         value="#{propietarioControlador.propietarioActual.proTelefono}" 
+                                         maxlength="100" onkeyup="value = value.toUpperCase();" 
+                                         title="ProTelefono" />
+                            <p:message for="proTelefono"/>
+                            <h:outputLabel value="Correo:" for="proCorreo" />
+                            <p:inputText id="proCorreo" value="#{propietarioControlador.propietarioActual.proCorreo}" 
+                                         maxlength="100" 
+                                         title="ProCorreo" />
+                            <p:message for="proCorreo"/>
+                            <h:outputLabel value="Tiene Discapacidad:" for="proDiscapacidad" />
+                            <p:selectBooleanCheckbox id="proDiscapacidad" 
+                                                     disabled="#{propietarioControlador.propietarioActual.proTipoPersona=='J'}"
+                                                     value="#{propietarioControlador.propietarioActual.proDiscapacidad}"/>
+                            <p:message for="proDiscapacidad"/>
+                            <h:outputLabel value="Observaciones:" for="proObservaciones" />
+                            <p:inputText id="proObservaciones" 
+                                         onkeyup="value = value.toUpperCase();" 
+                                         value="#{propietarioControlador.propietarioActual.proObservaciones}" title="ProObservaciones" />
+                            <p:message for="proObservaciones"/>
+                            <h:outputLabel value="Ciudad" for="catdetCiudad" />
+                            <p:autoComplete id="catdetCiudad" value="#{propietarioControlador.propietarioActual.catdetCiudad}" 
+                                            completeMethod="#{propietarioControlador.listarCatDetalles}" 
+                                            onkeyup="value = value.toUpperCase();" 
+                                            converter="#{catalogoDetalleConverter}"
+                                            var="ciu" itemLabel="#{ciu.catdetTexto}" itemValue="#{ciu}"  forceSelection="true"
+                                            >
+                                <p:column>
+                                    <h:outputText value="#{ciu.catdetTexto}" />
+                                </p:column>
+                            </p:autoComplete>
+
+                            <p:message for="catdetCiudad"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:commandButton id="btnGuardarProp"
+                                             value="Guardar"
+                                             action="#{propietarioControlador.guardarPropietario}"
+                                             async="true" global="false"
+                                             update="@form"
+                                             process="@this, pnlProp"/>
+                            <p:commandButton id="btnNuevoProp"
+                                             value="Nuevo"
+                                             action="#{propietarioControlador.inicializar}"
+                                             async="true" global="false"
+                                             update="@form"/>
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel>
+                        <h:panelGrid>
+                            <p:dataTable value="#{propietarioControlador.listaPropietarios}" var="item"
+                                         rows="10" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <p:column headerText="Cédula/RUC" filterBy="#{item.proCi}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.proCi}"/>
+                                </p:column>
+                                <p:column headerText="Tipo">
+                                    <h:outputText value="Natural" rendered="#{item.proTipoPersona=='N'}"/>
+                                    <h:outputText value="Juridica" rendered="#{item.proTipoPersona=='J'}"/>
+                                </p:column>
+                                <p:column headerText="Apellidos" filterBy="#{item.proApellidos}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.proApellidos}"/>
+                                </p:column>
+                                <p:column headerText="Nombres" filterBy="#{item.proNombres}" filterMatchMode="contains">
+                                    <h:outputText value="#{item.proNombres}"/>
+                                </p:column>
+                                <p:column headerText="Fecha Nac">
+                                    <h:outputText value="#{item.proFechaNacimiento}">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:outputText>
+                                </p:column>
+                                <p:column headerText="Razon Social" sortBy="#{item.proRazonSocial}">
+                                    <h:outputText value="#{item.proRazonSocial}"/>
+                                </p:column>
+                                <p:column headerText="Ciudad">
+                                    <h:outputText value="#{item.catdetCiudad.catdetTexto}"/>
+                                </p:column>
+                                <p:column headerText="Dirección">
+                                    <h:outputText value="#{item.proDireccion}"/>
+                                </p:column>
+                                <p:column headerText="Teléfono">
+                                    <h:outputText value="#{item.proTelefono}"/>
+                                </p:column>
+                                <p:column headerText="Correo">
+                                    <h:outputText value="#{item.proCorreo}"/>
+                                </p:column>
+                                <p:column headerText="Disc">
+                                    <h:selectBooleanCheckbox value="#{item.proDiscapacidad}" disabled="true"/>
+                                </p:column>
+                                <p:column headerText="Observaciones">
+                                    <h:outputText value="#{item.proObservaciones}"/>
+                                </p:column>
+                                <p:column headerText="">
+                                    <p:commandButton id="btnSelProp"
+                                                     action="#{propietarioControlador.seleccionarPropietario(item)}"
+                                                     process="@this"
+                                                     async="true"
+                                                     global="false"
+                                                     icon="ui-icon-pencil"
+                                                     update="@form"
+                                                     onstart="PF('dlgValidando').show();" onsuccess="PF('dlgValidando').hide();"/>
+
+                                </p:column>
+                                <p:column headerText="">
+                                    <p:commandButton id="btnEliProp"
+                                                     action="#{propietarioControlador.eliminarPropietario(item)}"
+                                                     process="@this"
+                                                     async="true"
+                                                     global="false"
+                                                     icon="ui-icon-trash"
+                                                     update="@form"
+                                                     onstart="PF('dlgValidando').show();" onsuccess="PF('dlgValidando').hide();"/>
+
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+
+
+            </center>
+
+        </ui:define>
+    </ui:composition>
+</html>

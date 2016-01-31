@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+                
+                <center>
+                    <h:panelGrid id="panelContieneAplicacion1" width="1000" columns="1" >                                                 
+                            <p:panel  style="background: #C4D770;" header="#{txt.INGRESO}" >   
+                                <center>
+                                <h:panelGrid id="panelIngreso" columns="3">                                                                                                       
+                                <p:outputLabel value="#{txt.clave_catastral}" style="font-size:14px"/>
+                                
+                                <p:inputText id="alPred" value="#{gestionAlcabalasControlador.catastroPredialActual.catpreCodNacional}#{gestionAlcabalasControlador.catastroPredialActual.catpreCodLocal}"                                                     
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.clave_catastral}"
+                                             style="font-family: Arial; font-size: 15px;"/>
+                                 <p:message  for="alPred" display="icon"/>
+                                
+                               <!-- <p:selectOneMenu id="alPred" value="#{gestionAlcabalasControlador.catastroPredialActual}" style="width:180px;font-weight: bold;background: green;"
+                                                 converter="#{catastroPredialConverter}" var="t" required="true" requiredMessage="Se nesecita un valor: #{txt.clave_catastral}">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                            <f:selectItems var="tipo" 
+                                                           value="#{gestionAlcabalasControlador.listaCatastroPredial}" 
+                                                           itemLabel="#{tipo.catpreCodNacional}#{tipo.catpreCodLocal}" 
+                                                           itemValue="#{tipo}"/> 
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.catpreCodNacional}#{t.catpreCodLocal}" style="font-size: 10px;"/> 
+                                            </p:column> 
+                                            <p:ajax listener="#{gestionAlcabalasControlador.obtenerCamposCatPredial}"  update=":frmAlcabalas:tabAlca:panelContieneAplicacion1"
+                                         process="@this" async="true" global="false"/>                                             
+                                        </p:selectOneMenu> 
+                                 <p:message  for="alPred" display="icon"/>
+                                -->
+                                <p:outputLabel value="#{txt.anio}"/>
+                                
+                                <p:inputText id="alAnio" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalAnio}"                                                     
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.anio}"
+                                             style="font-family: Arial; font-size: 15px;"/>
+                                
+                               <!-- <p:selectOneMenu id="alAnio" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalAnio}" style="width:180px; font-weight: bold;background: green;"
+                                                 required="true" requiredMessage="Se nesecita un valor: #{txt.anio}"
+                                                 >
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                            <f:selectItem itemLabel="2015" itemValue="2015" />
+                                            <f:selectItem itemLabel="2016" itemValue="2016" />          
+                                            <f:selectItem itemLabel="2017" itemValue="2017" />          
+                                        </p:selectOneMenu>
+                                 -->
+                                <p:message  for="alAnio" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.parroquia}"/>
+                                <p:inputText id="alParr" value="#{gestionAlcabalasControlador.catastroPredialActual.catdetParroquia.catdetTexto}"                                                     
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.parroquia}"
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                 <p:message  for="alParr" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.sector}"/>
+                                <p:inputText id="alSec" value="#{gestionAlcabalasControlador.catastroPredialActual.catdetSector.catdetTexto}" 
+                                            readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.sector}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                 <p:message  for="alSec" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.direccion}"/>
+                                <p:inputText id="alDir" value="#{gestionAlcabalasControlador.propietario.proDireccion}"
+                                            readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.direccion}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                 <p:message  for="alDir" display="icon"/>
+                                
+                                 <p:outputLabel value="#{txt.vendedor}"/>
+                                 <p:inputText id="alVen" value="#{gestionAlcabalasControlador.propietario.proNombres} #{gestionAlcabalasControlador.propietario.proApellidos}"
+                                            readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.vendedor}"
+                                            style="width:250px ; color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                  <p:message  for="alVen" display="icon"/>
+                                 
+                                <p:outputLabel value="#{txt.comprador}"/>
+                                <p:inputText id="alCom" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalComprador}"   
+                                          required="true" requiredMessage="Se nesecita un valor: #{txt.comprador}"
+                                          onkeyup="value = value.toUpperCase();"
+                                          style="width:250px ; font-family: Arial; font-size: 15px;"/>
+                                 <p:message  for="alCom" display="icon"/>
+                                 
+                                <p:outputLabel value="#{txt.area_de_terreno}"/>
+                                <p:inputText id="alTerr" value="#{gestionAlcabalasControlador.catastroPredialActual.catpreAreaTotal}"
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.area_de_terreno}"
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                <p:message  for="alTerr" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.area_de_construccion}"/>
+                                <p:inputText id="alCons" value="#{gestionAlcabalasControlador.catastroPredialActual.catpreAreaTotalCons}"
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.area_de_construccion}" 
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                 <p:message  for="alCons" display="icon"/>
+                                 
+                                <p:outputLabel value="#{txt.area_total}"/>
+                                <p:inputText id="alTot" value="#{gestionAlcabalasControlador.catastroPredialActual.catpreAreaTotal+gestionAlcabalasControlador.catastroPredialActual.catpreAreaTotalCons}"
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.area_total}" 
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                  <p:message  for="alTot" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.avaluo_actual}"/>
+                                <p:inputText id="alAva" value="#{gestionAlcabalasControlador.catastroPredialValoracionActual.catprevalAvaluoTot}"   
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.avaluo_actual}"
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                <p:message  for="alAva" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.precio_de_venta}"/>
+                                <p:inputText id="alPrec" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalPrecioventa}"
+                                             onkeypress="return isDecimalKey(event)" required="true" requiredMessage="Se nesecita un valor: #{txt.precio_de_venta}"
+                                             style="font-family: Arial; font-size: 15px;">
+                                    <p:ajax event="keyup" listener="#{gestionAlcabalasControlador.valorMayorBaseImponible}"  update=":frmAlcabalas:tabAlca:panelPlusvalia"
+                                         process="@this" async="true" global="false"/>  
+                                </p:inputText>
+                                <p:message  for="alPrec" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.concepto}"/>
+                                <p:selectOneMenu id="alConc" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catdetConcepto}"
+                                                         converter="#{catalogoDetalleConverter}" var="t" required="true" requiredMessage="Se nesecita un valor: #{txt.concepto}"
+                                                         style="width:250px; font-family: Arial; font-size: 15px; background: green;">
+                                            <f:selectItem itemLabel="Seleccione..." itemValue="" /> 
+                                            <f:selectItems var="tipo" 
+                                                           value="#{gestionAlcabalasControlador.listaCatalogoDetalleConcepto}" 
+                                                           itemLabel="#{tipo.catdetTexto}" 
+                                                           itemValue="#{tipo}"/> 
+                                            <p:column width="200" style="white-space: normal">  
+                                                <h:outputText escape="false" value="#{t.catdetTexto}" style="font-size: 10px"/> 
+                                            </p:column>                                                                             
+                                        </p:selectOneMenu>      
+                                 <p:message  for="alConc" display="icon"/>
+                                 </h:panelGrid>
+                                    </center>
+                                </p:panel>
+                            
+                            <p:panel style="background: #CBDD90;" header="#{txt.DETERMINACION}">
+                              <!--  alAva,alPrec, -->
+                              <center>
+                                <h:panelGrid id="pnlCalcular" columns="3">                                                                                                       
+                                <p:commandButton value="#{txt.CALCULAR_btn}" 
+                                                     id="btnCalcular" 
+                                                     action="#{gestionAlcabalasControlador.calcularDeterminacion()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this,panelIngreso" 
+                                                     update=":frmAlcabalas:msgs, :frmAlcabalas:tabAlca:pnlCalcular, :frmAlcabalas:tabAlca:panelIngreso"
+                                                     async="true"
+                                                     global="false"                                                    
+                                                     />
+                                <p:outputLabel/>
+                                 <p:outputLabel/>
+                                
+                                <p:outputLabel value="#{txt.base_imponible}"/>
+                                <p:inputText id="alBas" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalBaseimp}" 
+                                             readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.base_imponible}"
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                <p:message  for="alBas" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.impuesto}"/>
+                                <p:inputText id="alImp" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalImpuesto}" 
+                                            readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.impuesto}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                <p:message  for="alImp" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.consejo_provincial}"/>
+                                <p:inputText id="alConProv" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalConsejoProv}" 
+                                            readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.consejo_provincial}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                <p:message  for="alConProv" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.procesamiento}"/>
+                                <p:inputText id="alProc" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalTasaProc}" 
+                                            readonly="true" required="true" requiredMessage="Se nesecita un valor: #{txt.procesamiento}"
+                                            style="color:white ; font-family: Arial; font-size: 15px; background: #2C8C19;"/>
+                                <p:message  for="alProc" display="icon"/>
+                                
+                                <p:outputLabel value="#{txt.total}"/>
+                                <p:inputText id="alTotal" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalTotal}" 
+                                             readonly="true" requiredMessage="Se nesecita un valor: #{txt.total}" 
+                                             style="color:white ; font-family: Arial; font-size: 15px; background: black;"/>
+                                <p:message for="alTotal" display="icon" />
+                                
+                                <p:outputLabel value="#{txt.observaciones}"/>
+                                <p:inputTextarea id="alObs" value="#{gestionAlcabalasControlador.catastroPredialAlcabalaValoracion.catprealcvalObservaciones}"
+                                                 rows="3" required="true" requiredMessage="Se nesecita un valor: #{txt.observaciones}"
+                                                 onkeyup="value = value.toUpperCase();"
+                                                 style="width:300px ; font-family: Arial; font-size: 15px;"/>
+                                <p:message  for="alObs" display="icon"/>
+                                 </h:panelGrid>  
+                                
+                                  <br></br>
+                                  <p:commandButton value="#{txt.guardar_btn}" 
+                                                     id="btnGuardar" 
+                                                     action="#{gestionAlcabalasControlador.guardarAlcabala()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this,alAnio,alCom,alPrec,alConc,alBas,alImp,alConProv,alProc,alTotal,alObs, pnlCalcular" 
+                                                     update=":frmAlcabalas:msgs, :frmAlcabalas:tabAlca:pnlCalcular"
+                                                     async="true"
+                                                     global="false"
+                                                     />    
+                                  </center>
+                                </p:panel>                                                                                                                                                 
+                  </h:panelGrid>
+                </center>
+</html> 

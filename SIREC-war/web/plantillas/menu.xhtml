@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
+    <ui:composition>
+        <h:form id="frmMenu" >
+                        <h:panelGrid  columns="1" style="font-size: 10px;">
+                            <h:panelGroup>
+                                <p:menubar model="#{navegacionControlador.menu}">
+                                </p:menubar>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:form>         
+
+    </ui:composition>
+</html>

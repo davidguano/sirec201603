@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <div id="header" style="background: #403521;">
+            <h:panelGrid columns="1">
+                <h:panelGrid columns="5" style="text-align: left !important;">
+                    <h:outputText value="#{txt.sistema}" styleClass="ui-icon fa fa-dollar fa-2x" style="color: #FFFFFF;"/>
+                    <h:panelGrid width="170"/>
+                    <h:outputText value="#{txt.detalle_sistema}" style="color: #FFFFFF;"/>
+                    <h:panelGrid width="200"/>
+                    <h:panelGrid columns="2"  style="text-align: right !important;">
+                        <h:outputText value="Usuario:" style="color: white;font-weight: bold;font-size: 12px"/>
+                        <h:outputText value="#{navegacionControlador.usuarioActual.usuUsuario} " style="color: white;font-size: 15px"/>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </h:panelGrid>
+        </div>
+    </ui:composition>
+</html>
+

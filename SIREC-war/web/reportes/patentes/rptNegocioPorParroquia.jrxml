@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptNegocioPorParroquia" language="groovy" pageWidth="1500" pageHeight="842" columnWidth="1500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="8662a249-9fa5-4a67-8f25-655180834f9b">
+	<property name="ireport.zoom" value="4.594972986357231"/>
+	<property name="ireport.x" value="6298"/>
+	<property name="ireport.y" value="217"/>
+	<parameter name="logo_gad" class="java.lang.String"/>
+	<parameter name="cod_patente" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[--Datos catastro predial--------------
+select pa.pat_codigo as clavePatente,pa.pat_estado as estadoPatente,cp.catpre_cod_nacional||''||cp.catpre_cod_local as clveCatastro,
+p.pro_ci as rucIdentificacion,p.pro_apellidos||' '||p.pro_nombres as propietarioRz,
+pa.pat_nombre_comercial as nombreComercial,p.pro_direccion as direccion,cdp.catdet_texto as parroquia,
+cds.catdet_texto as sector,p.pro_telefono as propTelefono,p.pro_correo as correo,pa.pat_representante_legal as representanteLegal,
+pa.pat_contador as patContador,pa.pat_ruc_contador as patRucContador,
+--Patente--
+cdtes.catdet_texto as tipEstablecimiento,cdtem.catdet_texto as tipoEmpresa,
+cdtloc.catdet_texto as tipoLocal,cdtacec.catdet_texto as tipActEconomica,
+pa.pat_placa as placa, pa.pat_desc_act_eco as actividadEconomica, pa.pat_inicio_act_eco as inicioActEcon,
+pa.pat_artesano_calificado as artCalificado, pa.pat_obligado_cont as oblContab,cdhf.catdet_texto as horaFuncionamiento,
+pa.pat_horario_desde as horarioInicioAE,pa.pat_horario_hasta as horarioHastaAE,
+pa.pat_func_lunes as lunes,pa.pat_func_martes as martes,pa.pat_func_miercoles as miercoles,pa.pat_func_jueves as jueves,
+pa.pat_func_viernes as viernes,pa.pat_func_sabado as sabado,pa.pat_func_domingo as domingo,
+pa.pat_area_local as areaLocal, pa.pat_local_aforo as aforo,pa.pat_categoria_turistica as cTuristica,pa.pat_num_reg_turistico as rTuristico,
+cdes.catdet_texto as especialidad,pa.pat_observaciones as observaciones
+from
+sirec.propietario  p,sirec.propietario_predio pp,sirec.catastro_predial cp,
+sirec.patente pa,sirec.catalogo_detalle cdp,sirec.catalogo_detalle cds,
+sirec.catalogo_detalle cdtes,sirec.catalogo_detalle cdtem,sirec.catalogo_detalle cdtloc,
+sirec.catalogo_detalle cdtacec,sirec.catalogo_detalle cdhf,sirec.catalogo_detalle cdes
+where p.pro_ci=pp.pro_ci
+and pp.catpre_codigo=cp.catpre_codigo
+and cp.catpre_codigo=pa.catpre_codigo
+and cp.catdet_parroquia=cdp.catdet_codigo
+and cp.catdet_sector=cds.catdet_codigo
+and pa.catdet_tipo_est=cdtes.catdet_codigo
+and pa.catdet_tipo_empresa=cdtem.catdet_codigo
+and pa.catdet_tipo_local=cdtloc.catdet_codigo
+and pa.catdet_tipo_act_eco=cdtacec.catdet_codigo
+and pa.catdet_horario_func=cdhf.catdet_codigo
+and pa.catdet_especialidad=cdes.catdet_codigo
+and cp.catdet_parroquia=507]]>
+	</queryString>
+	<field name="clavepatente" class="java.lang.Integer"/>
+	<field name="estadopatente" class="java.lang.String"/>
+	<field name="clvecatastro" class="java.lang.String"/>
+	<field name="rucidentificacion" class="java.lang.String"/>
+	<field name="propietariorz" class="java.lang.String"/>
+	<field name="nombrecomercial" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="parroquia" class="java.lang.String"/>
+	<field name="sector" class="java.lang.String"/>
+	<field name="proptelefono" class="java.lang.String"/>
+	<field name="correo" class="java.lang.String"/>
+	<field name="representantelegal" class="java.lang.String"/>
+	<field name="patcontador" class="java.lang.String"/>
+	<field name="patruccontador" class="java.lang.String"/>
+	<field name="tipestablecimiento" class="java.lang.String"/>
+	<field name="tipoempresa" class="java.lang.String"/>
+	<field name="tipolocal" class="java.lang.String"/>
+	<field name="tipacteconomica" class="java.lang.String"/>
+	<field name="placa" class="java.lang.String"/>
+	<field name="actividadeconomica" class="java.lang.String"/>
+	<field name="inicioactecon" class="java.sql.Date"/>
+	<field name="artcalificado" class="java.lang.Boolean"/>
+	<field name="oblcontab" class="java.lang.Boolean"/>
+	<field name="horafuncionamiento" class="java.lang.String"/>
+	<field name="horarioinicioae" class="java.lang.String"/>
+	<field name="horariohastaae" class="java.lang.String"/>
+	<field name="lunes" class="java.lang.Boolean"/>
+	<field name="martes" class="java.lang.Boolean"/>
+	<field name="miercoles" class="java.lang.Boolean"/>
+	<field name="jueves" class="java.lang.Boolean"/>
+	<field name="viernes" class="java.lang.Boolean"/>
+	<field name="sabado" class="java.lang.Boolean"/>
+	<field name="domingo" class="java.lang.Boolean"/>
+	<field name="arealocal" class="java.lang.Double"/>
+	<field name="aforo" class="java.lang.Integer"/>
+	<field name="cturistica" class="java.lang.String"/>
+	<field name="rturistico" class="java.lang.String"/>
+	<field name="especialidad" class="java.lang.String"/>
+	<field name="observaciones" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="1" width="100" height="50" uuid="ca1e179b-a32a-4a9c-b5ac-2c64853d5ff4"/>
+				<imageExpression><![CDATA[$P{logo_gad}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="1" width="252" height="20" uuid="8bb5b337-e808-477d-9d60-811bb9f8f8d9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GAD MUNICIPAL DEL CANTÓN PEDRO MONCAYO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="21" width="251" height="30" uuid="0b68be57-4e73-4152-9a2e-afcf513e9683"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DECLARACIÓN TRIBUTARIA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="65f2e0cd-8e7c-4e22-b771-2a64c712d5e6"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Patente Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="20" uuid="0db1d03c-a679-409e-8978-b4d75dbd37b1"/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="4413b0b5-b355-4e1c-b0a3-c5cbee7a839d"/>
+				<text><![CDATA[Clave Catastral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="100" height="20" uuid="297dfc55-14c3-400c-a850-9f0965686e4a"/>
+				<text><![CDATA[Cédula / Ruc]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="0" width="100" height="20" uuid="44336b44-e2d2-4461-bd9b-0722af55070f"/>
+				<text><![CDATA[Propietario / Razón Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="100" height="20" uuid="75e54867-e4f8-413a-934f-43bd3cd6e86d"/>
+				<text><![CDATA[Nombre Comercial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="0" width="100" height="20" uuid="1db991ef-56bb-4fc8-ac66-d8b79da8bc2f"/>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="100" height="20" uuid="2b31accf-a4f0-4566-9f87-500334d4b6b1"/>
+				<text><![CDATA[Parroquia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="0" width="100" height="20" uuid="e59570f0-c3d2-4cd2-89e0-ec1c43b66662"/>
+				<text><![CDATA[Sector]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="900" y="0" width="100" height="20" uuid="83d13eb2-7c2d-4002-bc4c-c5089147f9c9"/>
+				<text><![CDATA[Telefono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1000" y="0" width="100" height="20" uuid="7c110837-2ddf-47c1-af1c-88c8406c4132"/>
+				<text><![CDATA[correo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1100" y="0" width="100" height="20" uuid="3ce2067f-d17e-4640-a600-4735550dcf5c"/>
+				<text><![CDATA[representantelegal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1200" y="0" width="100" height="20" uuid="e915bcca-35cf-441f-bad5-41d7b9d4c83c"/>
+				<text><![CDATA[patcontador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1300" y="0" width="100" height="20" uuid="a096e6e4-4322-4b34-985b-ef44ec2f2426"/>
+				<text><![CDATA[patruccontador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1400" y="0" width="100" height="20" uuid="79b8fa43-9af4-4c45-89bc-961a30a63916"/>
+				<text><![CDATA[tipestablecimiento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="3f6947cc-1759-48e3-aa17-a896af765b9a"/>
+				<textFieldExpression><![CDATA[$F{clavepatente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="20" uuid="939f5545-8ec5-46ac-a70e-408adbd94996"/>
+				<textFieldExpression><![CDATA[$F{estadopatente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="0" width="100" height="20" uuid="da5b0a85-b2e7-4656-ba75-7974608ad302"/>
+				<textFieldExpression><![CDATA[$F{clvecatastro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="300" y="0" width="100" height="20" uuid="d311a54c-4d08-480b-ac47-dd942591f153"/>
+				<textFieldExpression><![CDATA[$F{rucidentificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="400" y="0" width="100" height="20" uuid="30b41597-626f-4519-acdd-bf8e21b5d6dc"/>
+				<textFieldExpression><![CDATA[$F{propietariorz}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="500" y="0" width="100" height="20" uuid="773ba899-b8b0-487a-a2b6-04088cbb1259"/>
+				<textFieldExpression><![CDATA[$F{nombrecomercial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="600" y="0" width="100" height="20" uuid="bdc1aa8b-b61b-486f-bd74-0f7bc7deebfa"/>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="100" height="20" uuid="7746ba41-5f5c-4064-985d-7baecb839fd6"/>
+				<textFieldExpression><![CDATA[$F{parroquia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="800" y="0" width="100" height="20" uuid="0172a91f-c862-4295-9500-b91f1466ed46"/>
+				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="900" y="0" width="100" height="20" uuid="2d239105-59fb-4056-9ea6-2fcd5a8a6449"/>
+				<textFieldExpression><![CDATA[$F{proptelefono}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1000" y="0" width="100" height="20" uuid="805b0298-85e4-4f9f-81bd-c67894a3f1ab"/>
+				<textFieldExpression><![CDATA[$F{correo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1100" y="0" width="100" height="20" uuid="07639cfc-4a11-445f-ae18-ac277726c0f9"/>
+				<textFieldExpression><![CDATA[$F{representantelegal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1200" y="0" width="100" height="20" uuid="82c2343f-e26c-4300-8678-40bcedac1e4e"/>
+				<textFieldExpression><![CDATA[$F{patcontador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1300" y="0" width="100" height="20" uuid="f78d4f49-4aa6-496f-a6a1-32cd7153a834"/>
+				<textFieldExpression><![CDATA[$F{patruccontador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1400" y="0" width="100" height="20" uuid="970df131-3264-4ef2-9f8d-f0dd313b5089"/>
+				<textFieldExpression><![CDATA[$F{tipestablecimiento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

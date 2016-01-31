@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <center>
+        <h:panelGrid id="panelEmiAlcaPlus" width="1000" columns="1" >                                                 
+            <p:panel id="pnlListPred" >                                
+                <h:panelGrid columns="2">                                    
+                    <p:dataTable id="lstValsEmi" value="#{gestionAlcabalasControlador.listaEjecutarValoracion}" var="catastroP"  
+                                 selection="#{gestionAlcabalasControlador.listaCatastroPredialTablaValoracionSeleccion}"                                                                                            
+                                 rowKey="#{catastroP}" rows="10"                                             
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 emptyMessage="No se han encontrado Predios"
+                                 rowIndexVar="rowId"
+                                 >                                              
+                        <f:facet name="header">
+                            <p:outputLabel value="Lista de Predios" style="font-size:10px;"/> 
+                        </f:facet>                                                            
+                        <p:column headerText="#{txt.clave_catastral}" filterBy="#{catastroP.catpreClaveCatastal}" filterMatchMode="contains" width="60" style="font-size:10px;"> 
+                            <h:outputText value="#{catastroP.catpreClaveCatastal}" style="font-size:11px;" />
+                        </p:column>
+                        <p:column headerText="#{txt.nombre_razón_social}" filterBy="#{catastroP.proCi.proRazonSocial}" filterMatchMode="contains" width="50" style="font-size:10px;"> 
+                            <h:outputText value="#{catastroP.proCi.proRazonSocial}"  style="font-size:11px;" />
+                        </p:column>
+                        <p:column headerText="#{txt.ruc_ci}" filterBy="#{catastroP.proCi.proCi}" filterMatchMode="contains" width="50" style="font-size:10px;"> 
+                            <h:outputText value="#{catastroP.proCi.proCi}"  style="font-size:10px;" />
+                        </p:column>
+                        <p:column headerText="#{txt.parroquia_t}" filterBy="#{catastroP.catastroPredial.catdetParroquia.catdetTexto}" filterMatchMode="contains" width="50" style="font-size:10px;"> 
+                            <h:outputText value="#{catastroP.catastroPredial.catdetParroquia.catdetTexto}"  style="font-size:10px;" />
+                        </p:column>                            
+                        <p:column headerText="#{txt.dirección}" filterBy="#{catastroP.proCi.proDireccion}" filterMatchMode="contains" width="50" style="font-size:10px;"> 
+                            <h:outputText value="#{catastroP.proCi.proDireccion}"  style="font-size:10px;"/>
+                        </p:column> 
+                        <p:column headerText="#{txt.anio_t}" filterBy="#{catastroP.catastroPredialValoracion.catprevalAnio}" filterMatchMode="contains" width="50" style="font-size:10px;"> 
+                            <h:outputText value="#{catastroP.catastroPredialValoracion.catprevalAnio}"  style="font-size:10px;"/>
+                        </p:column>                                                                                                                                                 
+                        <p:column headerText="#{txt.total} Alcabala" width="40" style="font-size:11px;"> 
+                            <h:outputText value="#{catastroP.catastroPredialAlcabalaValoracion.catprealcvalTotal}"  style="font-size:10px;"/>
+                        </p:column>                                                                                                                        
+                        <p:column headerText="#{txt.total} Plusvalia" width="40" style="font-size:11px;"> 
+                            <h:outputText value="#{catastroP.catastroPredialPlusvaliaValoracion.catprepluvalImpuesto}"  style="font-size:10px;"/>
+                        </p:column>                                                                                                                        
+                        <p:column headerText="Seleccione" selectionMode="single" exportable="false" width="40" style="width:16px;text-align:center"/>                                                                                                                                                                       
+                    </p:dataTable>                                                                                                                                                                                                                                                                  
+                </h:panelGrid>                                
+                <p:commandButton id="btnLimpiar"
+                                 value="LIMPIAR BUSQUEDA"
+                                 action="#{gestionAlcabalasControlador.resetearFitrosTabla(':frmAlcabalas:tabAlca:lstValsEmi')}"  
+                                 icon="ui-icon-document"  
+                                 process="@this" 
+                                 update=":frmAlcabalas:tabAlca:pnlListPred"
+                                 async="true"
+                                 global="false"
+                                 />
+                <p:commandButton value="#{txt.PRE_EMISION_btn}" 
+                                 id="btnPreEmir" immediate="true" ajax="false" process="@this,lstValsEmi">                                                                                                                                     
+                    <p:dataExporter type="xlsx" target="lstValsEmi" fileName="Pre_Emision_Alca_Plus" 
+                                    postProcessor="#{gestionAlcabalasControlador.postProcessXLS}"
+                                    selectionOnly="true"  />
+                </p:commandButton>                             
+            </p:panel>                                                                                                                                                                                                                                                                     
+        </h:panelGrid>
+    </center>
+</html>        

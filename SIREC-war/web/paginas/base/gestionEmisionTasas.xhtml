@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+                
+                <center>
+                    <h:panelGrid id="panelEmiTasas" width="1000" columns="1" >                                                 
+                     
+                             <center>
+                            <p:panel>
+                                <center>
+                        <h:panelGrid id="panelEmi" columns="1">    
+                            
+                            <p:outputLabel value="#{txt.IDENTIFICACIÓN}"/>
+                            
+                                                                                  
+                            <p:outputLabel value="#{txt.CI_RUC}"/>
+                            
+                         
+                                                        
+                            <p:outputLabel value="#{txt.CONTRIBUYENTE}"/>
+                                                                                                                                                                
+                            
+                            <p:outputLabel value="#{txt.DIRECCIÓN}"/>
+                            <p:outputLabel value="#{txt.TELÉFONO}"/>
+                            <p:outputLabel value="#{txt.TASA}"/>                         
+                            <p:outputLabel value="#{txt.AVALÚO_CONTRATO}"/>
+                            
+                            <p:commandButton value="#{txt.CALCULAR_btn}" 
+                                                     id="btnCalcularEmiTasa"                                                      
+                                                     icon="ui-icon-disk"  
+                                                     process="@this" 
+                                                     update=":frmTasa:msgs"
+                                                     async="true"
+                                                     global="false"
+                                                     /> 
+                            
+                            
+                            <p:outputLabel value="#{txt.SUBTOTAL}"/>
+                            <p:outputLabel value="#{txt.DESCUENTOS}"/>
+                            <p:outputLabel value="#{txt.IVA}"/>
+                            <p:outputLabel value="#{txt.TOTAL}"/>
+                            
+                            
+                            
+                        </h:panelGrid>                                                                                                       
+                                
+                                
+                         <p:commandButton value="#{txt.guardar_btn}" 
+                                                     id="btnGuardarEmiTasa" 
+                                                     action="#{gestionTasasControlador.guardarIngresoTasa()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this" 
+                                                     update=":frmTasa:msgs"
+                                                     async="true"
+                                                     global="false"
+                                                     />   
+                         
+                         <p:commandButton value="#{txt.btn_nuevo}" 
+                                                     id="btnNuevoEmiTasa" 
+                                                     action="#{gestionTasasControlador.nuevoIngresoTasa()}" 
+                                                     icon="ui-icon-disk"  
+                                                     process="@this" 
+                                                     update=""
+                                                     async="true"
+                                                     global="false"
+                                                     />
+                         
+                          </center>  
+                         </p:panel>
+                            
+                         
+                         
+                       
+                               </center>    
+                       
+                       
+                                                                                                                                        
+                  </h:panelGrid>
+                </center>
+</html>        

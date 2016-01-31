@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <META NAME="AUTHOR" CONTENT="SGT" />
+        <META NAME="REPLY-TO" CONTENT="info@blueit.ec" />
+        <LINK REV="made" href="mailto:info@blueit.ec" />
+        <META NAME="Resource-type" CONTENT="Document"/>
+        <META NAME="Revisit-after" CONTENT="7 days"/>
+        <META NAME="robots" content="ALL"/>
+        <META NAME="DESCRIPTION" CONTENT="" />
+        <META NAME="KEYWORDS" CONTENT="" />
+        <title>SIREC</title>
+        <link href="${facesContext.externalContext.requestContextPath}/css/sirec_css.css" rel="stylesheet" type="text/css"/>
+    </h:head>
+
+    <h:body > 
+        <div id="container">
+            <div id="content">
+                <h:form id="loginForm" styleClass="clearfix">
+                    <p:focus context="loginForm"/>
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />  
+                    <p:panel style="height: 400px;">
+                        <center>
+
+                            <h:panelGrid columns="2" >
+                                <!--<h:graphicImage value="/imagenes/tarea.png"/>-->
+                                <h:panelGrid id="panelLogin" columns="1" styleClass="estiloLogin">
+                                    <h:panelGrid>
+                                        <h:outputText value="#{txt.sistema}" styleClass="ui-icon fa fa-dollar fa-2x"/>
+                                    </h:panelGrid>
+                                    <h:outputText value="#{txt.detalle_sistema}"/>
+
+                                    <h:panelGrid>
+                                        <p:panel header=""  >
+                                            <h:panelGrid columns="2">
+                                                <h:panelGrid   columns="1" style="margin-bottom:10px" cellpadding="5">
+                                                    <h:column>
+                                                        <h:graphicImage value="/imagenes/usu_reg.jpg" height="105"/>
+                                                    </h:column>
+                                                </h:panelGrid>
+                                                <h:panelGrid id="panelUsuarioLogin">
+                                                    <center>
+                                                        <p:panel  style="width: 250px;" >
+                                                            <h:panelGrid columns="2" >
+
+                                                                <h:outputLabel value="Usuario:" for="user"/>
+                                                                <p:inputText value="#{navegacionControlador.username}" 
+                                                                             requiredMessage="El nombre de usuario es requerido" 
+                                                                             size="20"
+                                                                             id="user" required="true"/> 
+
+                                                                <h:outputLabel value="Contraseña:" for="password"/>
+                                                                <p:password id="password" feedback="true" value="#{navegacionControlador.password}" size="20"
+                                                                            promptLabel="Ingrese su clave" required="true" requiredMessage="La clave es requerida!"
+                                                                            maxlength="20"
+                                                                            weakLabel="Seguridad poca" goodLabel="Seguridad buena" strongLabel="Seguridad fuerte"/>
+                                                                <h:graphicImage value="/imagenes/key.png" height="35"/>
+                                                                <p:commandButton update="panelLogin" value="Ingresar" action="#{navegacionControlador.autenticaBaseLocalNoCreaUsuario}"
+                                                                                 icon="ui-icon-unlocked"/>
+                                                                <f:verbatim/>
+                                                            </h:panelGrid>
+                                                        </p:panel>
+                                                    </center>
+                                                </h:panelGrid>
+                                            </h:panelGrid>
+                                            <center>
+                                                <h:panelGrid>
+                                                </h:panelGrid>
+                                            </center>
+                                        </p:panel>
+                                    </h:panelGrid>
+                                    <f:verbatim/>
+                                    <f:verbatim/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                            <br/>
+                            <br/>
+                        </center>
+                    </p:panel>
+                </h:form>
+            </div>
+            <div id="content_bottom"></div>
+            <div id="footer" class="clearfix" >
+                <h:panelGrid styleClass="estiloPiePagina" columns="3">
+                    <h:panelGrid style="width: 50%;"/>
+                    <h:panelGrid>
+                    </h:panelGrid>
+                </h:panelGrid>
+            </div>
+        </div>
+        <ui:include src="/plantillas/timeOut.xhtml"/>
+    </h:body>
+</html>
+

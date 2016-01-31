@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="titulo_predial_urbano" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8662a249-9fa5-4a67-8f25-655180834f9b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="366"/>
+	<parameter name="logo_gad" class="java.lang.String"/>
+	<parameter name="cod_valoracion" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT 'PREDIAL-'||rec.rec_codigo as titulo,
+       p.pro_ci as identificacion,
+       CASE WHEN p.pro_tipo_persona='N' THEN  p.pro_apellidos|| ' ' ||p.pro_nombres WHEN p.pro_tipo_persona='J' THEN p.pro_razon_social END as contribuyente,
+       c.catpre_otro_propietario as otro_propietario,
+       v.catpreval_anio as anio,
+       rec.rec_fecha_emision as fecha_emision,
+       rec.rec_fecha_pago as fecha_pago,
+       c.catpre_cod_nacional||c.catpre_cod_local as clave_catastral,
+       parr.catdet_texto as parroquia,
+       sec.catdet_texto as sector,
+       c.catpre_via_principal|| '-'|| c.catpre_interseccion||'-'|| c.catpre_numero as direccion,
+       c.catpre_num_lote as numlote,
+       c.catpre_area_total as area_terreno,
+       c.catpre_area_total_cons as area_construccion,
+       v.catpreval_avaluo_terr as avaluo_terreno,
+       v.catpreval_avaluo_edif as avaluo_construccion,
+       v.catpreval_avaluo_tot as avaluo_total,
+       v.catpreval_valor_propiedad as valor_propiedad,
+       v.catpreval_base_imponible as base_imponible,
+       catpreval_impuesto as impuesto,
+       catpreval_bomberos as bombero,
+       catpreval_solar_noedificado as solarni,
+       catpreval_tasa_adm as tasaadm,
+       CASE WHEN catpreval_activo is true THEN 'RECAUDADO'  WHEN  catpreval_activo is false then 'PENDIENTE' END as estado
+  FROM sirec.catastro_predial_valoracion v, sirec.catastro_predial c, sirec.propietario_predio pp, sirec.propietario p,
+       sirec.catalogo_detalle parr,sirec.catalogo_detalle sec, sirec.recaudacion_cab rec, sirec.recaudacion_det recdet
+  where c.catpre_codigo=v.catpre_codigo and c.catpre_codigo=pp.catpre_codigo and pp.pro_ci=p.pro_ci
+   and parr.catdet_codigo=c.catdet_parroquia and sec.catdet_codigo=c.catdet_sector and v.catpreval_codigo=$P{cod_valoracion}
+      and recdet.recdet_tipo='PR' and recdet.rec_codigo=rec.rec_codigo and recdet.recdet_codref=$P{cod_valoracion}]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="identificacion" class="java.lang.String"/>
+	<field name="contribuyente" class="java.lang.String"/>
+	<field name="otro_propietario" class="java.lang.String"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="fecha_emision" class="java.sql.Date"/>
+	<field name="fecha_pago" class="java.sql.Date"/>
+	<field name="clave_catastral" class="java.lang.String"/>
+	<field name="parroquia" class="java.lang.String"/>
+	<field name="sector" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="numlote" class="java.lang.String"/>
+	<field name="area_terreno" class="java.lang.Double"/>
+	<field name="area_construccion" class="java.lang.Double"/>
+	<field name="avaluo_terreno" class="java.math.BigDecimal"/>
+	<field name="avaluo_construccion" class="java.math.BigDecimal"/>
+	<field name="avaluo_total" class="java.math.BigDecimal"/>
+	<field name="valor_propiedad" class="java.math.BigDecimal"/>
+	<field name="base_imponible" class="java.math.BigDecimal"/>
+	<field name="impuesto" class="java.math.BigDecimal"/>
+	<field name="bombero" class="java.math.BigDecimal"/>
+	<field name="solarni" class="java.math.BigDecimal"/>
+	<field name="tasaadm" class="java.math.BigDecimal"/>
+	<field name="estado" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="13" y="16" width="100" height="50" uuid="ca1e179b-a32a-4a9c-b5ac-2c64853d5ff4"/>
+				<imageExpression><![CDATA[$P{logo_gad}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="199" y="12" width="252" height="20" uuid="8bb5b337-e808-477d-9d60-811bb9f8f8d9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GAD MUNICIPAL DEL CANTÓN PEDRO MONCAYO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="32" width="127" height="20" uuid="0b68be57-4e73-4152-9a2e-afcf513e9683"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION FINANCIERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="52" width="100" height="20" uuid="5e1a97ab-6087-4e44-9f4b-44d2e8939338"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PREDIAL URBANO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="538" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="2" width="54" height="20" uuid="69f32c5a-cae2-4086-a009-07377935f9c2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titulo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="2" width="100" height="20" uuid="6d87b6c9-ae99-4c07-ac22-2ed2c9af84cc"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="26" width="87" height="20" uuid="183f6611-3db5-4c3c-bd17-8babaec8d7fc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Identificacion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="26" width="112" height="20" uuid="2a94be56-ca68-49f0-ae9a-f04ea2ed361f"/>
+				<textFieldExpression><![CDATA[$F{identificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="50" width="87" height="20" uuid="d9bd577e-27d8-449e-96f2-fa716023fec3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Contribuyente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="50" width="272" height="20" uuid="416d311f-b678-4006-9963-d934792bdb03"/>
+				<textFieldExpression><![CDATA[$F{contribuyente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="70" width="87" height="20" uuid="188ec599-c91e-4897-99ab-32549b26ff7a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Otro Propietario:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="70" width="275" height="20" uuid="1572f7dd-8e10-4bbc-9f61-484f92e9beb9"/>
+				<textFieldExpression><![CDATA[$F{otro_propietario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="393" y="13" width="92" height="20" uuid="9f18c86d-9724-45e6-b2c2-5b85daaefd5b"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año de tributacion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="510" y="13" width="38" height="20" uuid="de238c5d-4b24-470f-b57d-c896ae42bc64"/>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="393" y="39" width="84" height="20" uuid="aba02d54-5418-435b-8450-454187cdcc56"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Emision:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="472" y="39" width="76" height="20" uuid="549ec3a0-777c-4f1d-94a0-c0ea3763961f"/>
+				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="393" y="59" width="74" height="20" uuid="132379d5-ac1a-4353-97e4-c48684fad754"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Pago:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="473" y="59" width="76" height="20" uuid="61c63744-cefb-440b-afe4-611f03cb76ef"/>
+				<textFieldExpression><![CDATA[$F{fecha_pago}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="13" y="99" width="530" height="1" uuid="3cee8c9f-d903-4d93-98e3-3dd34b190d10"/>
+			</line>
+			<staticText>
+				<reportElement x="255" y="106" width="76" height="20" uuid="436f5e35-4122-441a-8aea-64eca0fd1556"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UBICACION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="126" width="87" height="20" uuid="e55b751e-b9cc-4be8-95a4-58e7d6156729"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave Catastral:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="126" width="119" height="20" uuid="3e51872e-36b8-42f7-850e-10e1976c2f2f"/>
+				<textFieldExpression><![CDATA[$F{clave_catastral}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="146" width="87" height="20" uuid="6265c09a-5127-44f9-80ff-f34302852dab"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Parroquia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="146" width="147" height="20" uuid="f1dada6b-b3c3-44cc-8732-d01c6aa1a916"/>
+				<textFieldExpression><![CDATA[$F{parroquia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="166" width="87" height="20" uuid="c01ed8b3-693c-45c4-9483-6484d001846c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sector:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="166" width="147" height="20" uuid="a940685d-f2b1-458c-94ed-b84de9edffe4"/>
+				<textFieldExpression><![CDATA[$F{sector}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="126" width="64" height="20" uuid="24ce43bb-1217-4670-bd55-cb902abfc315"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccion:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="339" y="126" width="204" height="40" uuid="b3eddddf-e9be-4e69-9c74-b705f99458df"/>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="267" y="166" width="64" height="20" uuid="05201bb6-a248-4c4d-acfd-9da7472139cc"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Num Lote:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="339" y="166" width="143" height="20" uuid="c01f829d-3b37-4d08-bdb4-9e4ce9eeddc3"/>
+				<textFieldExpression><![CDATA[$F{numlote}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="13" y="207" width="530" height="1" uuid="274d885b-7c2a-4f65-a3b2-b0e09295dd1e"/>
+			</line>
+			<staticText>
+				<reportElement x="145" y="217" width="42" height="20" uuid="ed8a1541-5840-4b84-b640-342d2595dec3"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AREA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="217" width="56" height="20" uuid="5f6a5a72-9502-4583-a8b7-4d5b367378b6"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVALUO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="216" width="53" height="20" uuid="4c9244e2-d100-4eb4-82ad-2124a98eaf51"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUBROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="478" y="216" width="63" height="20" uuid="03ed1f10-5c93-4789-92d5-d2d782ba1a67"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALORES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="244" width="100" height="20" uuid="ab21591d-eff0-4194-989f-1369dbe3f612"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Area Terreno:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="244" width="86" height="20" uuid="143221b7-89bb-4350-9247-6d9cb48261f9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{area_terreno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="15" y="264" width="98" height="20" uuid="59ef8d64-eb04-4b63-b66c-33235d51f893"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Area Construcción:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="127" y="264" width="86" height="20" uuid="05db6df3-dc9b-45af-b040-bd539cf6a6cd"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{area_construccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="244" width="64" height="20" uuid="301ca538-f260-4d65-9eab-f2c6843c1300"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{avaluo_terreno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="264" width="64" height="20" uuid="21dff0ae-76ec-4333-aaf2-d4990ae71686"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{avaluo_construccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="16" y="291" width="71" height="20" uuid="4118a9b2-f49e-44af-87f2-bdee84b695f1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Avalúo Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="199" y="292" width="100" height="20" uuid="8d2a312f-1160-4119-9a06-36ddc4236a15"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{avaluo_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="350" width="100" height="20" uuid="1b62ef82-de81-41d7-8515-09326091220c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Base Imponible:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="168" y="350" width="100" height="20" uuid="6323155f-f954-41b7-802a-97582b4d73fa"/>
+				<textFieldExpression><![CDATA[$F{base_imponible}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="198" y="288" width="100" height="1" uuid="4d29386c-2a96-4ef7-9686-bf6260fdef38"/>
+			</line>
+			<staticText>
+				<reportElement x="327" y="245" width="125" height="20" uuid="9d5cbab7-cc60-4529-b1d7-2f7065f25050"/>
+				<text><![CDATA[Impuesto Predial Urbano]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="267" width="126" height="20" uuid="48d4088a-225f-40a3-a7f0-08177e080163"/>
+				<text><![CDATA[Servicios Administrativos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="478" y="245" width="70" height="20" uuid="944e1848-298f-4f54-9d9c-770a7ef3446f"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{impuesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="267" width="71" height="20" uuid="a146cbb5-bf27-4692-9a44-6389f60b2d7b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{tasaadm}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="291" width="122" height="20" uuid="2554062f-a509-4fd0-9b0d-0a69e88618d7"/>
+				<text><![CDATA[Impuesto Solar No Ident.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="476" y="290" width="72" height="20" uuid="8a0b3596-c8be-404d-aab4-6b20463712f8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{solarni}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="312" width="100" height="20" uuid="c791d36f-d945-4ddb-b96e-02793b54f6b7"/>
+				<text><![CDATA[Rebaja Hipotecaria:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="332" width="114" height="20" uuid="d75683f2-ea06-4c57-b7b3-53abe7b155b6"/>
+				<text><![CDATA[Construcción Obsoleta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="354" width="100" height="20" uuid="9ff34527-2757-464c-bfd7-a03b657ec170"/>
+				<text><![CDATA[Bomberos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="478" y="353" width="70" height="20" uuid="128d8be3-015f-410c-b879-7a2df66ec86b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{bombero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="375" width="113" height="20" uuid="0e9c8f5d-30d2-48cb-b057-0334b5edc4a7"/>
+				<text><![CDATA[Rebaja por 3era edad:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="328" y="398" width="122" height="20" uuid="a2f6fb26-373b-4dfd-bf6d-ea5a96a6a33e"/>
+				<text><![CDATA[Contribucion por mejoras:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="327" y="422" width="221" height="1" uuid="9463561a-c794-43bd-b36e-a986ae557269"/>
+			</line>
+			<staticText>
+				<reportElement x="328" y="426" width="100" height="20" uuid="b3b8545a-f509-46a1-b911-993cf4954fa3"/>
+				<text><![CDATA[SUBTOTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="446" width="100" height="20" uuid="fff721d2-7ac4-4444-88b8-515d858a2b6e"/>
+				<text><![CDATA[Descuento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="466" width="100" height="20" uuid="3bf1b7cc-2ef8-4729-bb3b-270d5acb0b85"/>
+				<text><![CDATA[Recargo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="486" width="100" height="20" uuid="76d98ff6-7df3-4787-9623-5826816157a0"/>
+				<text><![CDATA[Interes:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="327" y="506" width="221" height="1" uuid="cb5e7607-bb73-4a34-b7fa-0a6bb2ce9f8c"/>
+			</line>
+			<staticText>
+				<reportElement x="328" y="512" width="100" height="20" uuid="d497705c-c916-4909-9170-4afbe3e92751"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL A PAGAR:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

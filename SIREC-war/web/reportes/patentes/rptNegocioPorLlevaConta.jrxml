@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptNegocioPorLlevaConta" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8662a249-9fa5-4a67-8f25-655180834f9b">
+	<property name="ireport.zoom" value="1.6105100000000012"/>
+	<property name="ireport.x" value="10"/>
+	<property name="ireport.y" value="144"/>
+	<parameter name="logo_gad" class="java.lang.String"/>
+	<parameter name="cod_patente" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select  p.pro_razon_social as razonSocial, p.pro_ci as identRuc, pa.pat_codigo as clavePatente ,
+         pa.pat_inicio_act_eco as inicioActividades,'tipoDeclaracio' as tipoDeclaracion,pvmil.pat15val_anio_decla as anioDeclaracion,
+         pvmil.pat15val_anio_balance as anioBalance,pv.patval_patrimonio as patrimonio,
+                pv.patval_deducciones as deducPatente,pv.patval_impuesto as impuestoPatente,pv.patval_tasa_bomb as tasaBomberos,pv.patval_tasa_proc as tasaProcesamiento,
+                pv.patval_total as totalPatente,pvmil.pat15val_base_imponible as baseImponible,pvmil.pat15val_impuesto as impuestoxMil,pvmil.pat15val_tasa_proc as tasaProxMil,
+                 pvmil.pat15val_recargos as valxmilRecargos,pvmil.pat15val_total as totalValxMil
+                from
+                 sirec.propietario  p,sirec.propietario_predio pp,sirec.catastro_predial cp,
+              sirec.patente pa,sirec.patente_valoracion pv,sirec.patente_15xmil_valoracion pvmil
+                where p.pro_ci=pp.pro_ci
+                 and pp.catpre_codigo=cp.catpre_codigo
+                and cp.catpre_codigo=pa.catpre_codigo
+                and pa.pat_codigo=pv.pat_codigo
+                and pa.pat_codigo=pvmil.pat_codigo
+               and pa.pat_codigo=$P{cod_patente}]]>
+	</queryString>
+	<field name="razonsocial" class="java.lang.String"/>
+	<field name="identruc" class="java.lang.String"/>
+	<field name="clavepatente" class="java.lang.Integer"/>
+	<field name="inicioactividades" class="java.sql.Date"/>
+	<field name="tipodeclaracion" class="java.lang.String"/>
+	<field name="aniodeclaracion" class="java.lang.Integer"/>
+	<field name="aniobalance" class="java.lang.Integer"/>
+	<field name="patrimonio" class="java.math.BigDecimal"/>
+	<field name="deducpatente" class="java.math.BigDecimal"/>
+	<field name="impuestopatente" class="java.math.BigDecimal"/>
+	<field name="tasabomberos" class="java.math.BigDecimal"/>
+	<field name="tasaprocesamiento" class="java.math.BigDecimal"/>
+	<field name="totalpatente" class="java.math.BigDecimal"/>
+	<field name="baseimponible" class="java.math.BigDecimal"/>
+	<field name="impuestoxmil" class="java.math.BigDecimal"/>
+	<field name="tasaproxmil" class="java.math.BigDecimal"/>
+	<field name="valxmilrecargos" class="java.math.BigDecimal"/>
+	<field name="totalvalxmil" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement x="13" y="16" width="100" height="50" uuid="ca1e179b-a32a-4a9c-b5ac-2c64853d5ff4"/>
+				<imageExpression><![CDATA[$P{logo_gad}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="199" y="12" width="252" height="20" uuid="8bb5b337-e808-477d-9d60-811bb9f8f8d9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GAD MUNICIPAL DEL CANTÓN PEDRO MONCAYO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="32" width="251" height="20" uuid="0b68be57-4e73-4152-9a2e-afcf513e9683"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DECLARACIÓN TRIBUTARIA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="538" splitType="Stretch">
+			<line>
+				<reportElement x="13" y="99" width="530" height="1" uuid="3cee8c9f-d903-4d93-98e3-3dd34b190d10"/>
+			</line>
+			<line>
+				<reportElement x="13" y="207" width="530" height="1" uuid="274d885b-7c2a-4f65-a3b2-b0e09295dd1e"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="10" width="100" height="20" uuid="3464705f-3e52-443c-9d8b-f2dc0ee94fd2"/>
+				<text><![CDATA[Razon Social:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="10" width="100" height="20" uuid="97d78847-3c46-4d6a-8ab9-de3572e7b6a0"/>
+				<textFieldExpression><![CDATA[$F{razonsocial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="30" width="100" height="20" uuid="aa52bbe0-bfde-4c37-ac59-c0aef9faf38f"/>
+				<text><![CDATA[Ruc:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="30" width="100" height="20" uuid="df5a9d9f-4dfc-4335-a0f2-6b6368004285"/>
+				<textFieldExpression><![CDATA[$F{identruc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="50" width="100" height="20" uuid="d2f0a48a-ef4a-4401-89c2-0def28d5766d"/>
+				<text><![CDATA[Inicio de actividades:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="50" width="100" height="20" uuid="78b5573f-29bc-4e2a-a066-c69e4f63ed43"/>
+				<textFieldExpression><![CDATA[$F{inicioactividades}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="70" width="100" height="20" uuid="aa26b73f-576e-4ea3-964f-88618777ab98"/>
+				<text><![CDATA[Año de declaraciòn]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="113" y="70" width="100" height="20" uuid="5e25a248-e168-4b91-ad62-e52b28f05751"/>
+				<textFieldExpression><![CDATA[$F{aniodeclaracion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="13" width="100" height="20" uuid="03e9a4f3-308d-4b8a-825f-d2e86f94529f"/>
+				<text><![CDATA[Nº Patente:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="401" y="13" width="100" height="20" uuid="b13ecad2-4add-4942-827e-6dcca6111e47"/>
+				<textFieldExpression><![CDATA[$F{clavepatente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="33" width="100" height="20" uuid="fe7978b9-fb99-4244-afa4-cf8fc0d7636b"/>
+				<text><![CDATA[Tipo de declaración:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="401" y="33" width="100" height="20" uuid="94940890-83d0-4ec7-8c9c-777c50a532d3"/>
+				<textFieldExpression><![CDATA[$F{tipodeclaracion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="53" width="100" height="20" uuid="68be4cc2-5f2b-4944-b567-08a6549d1507"/>
+				<text><![CDATA[Año de Balance:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="401" y="53" width="100" height="20" uuid="a2b54836-2382-428e-885f-ce7d1ff377cb"/>
+				<textFieldExpression><![CDATA[$F{aniobalance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="260" width="119" height="20" uuid="71889fb6-cf5c-4144-806f-74b219f9734c"/>
+				<text><![CDATA[Impuesto:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="156" y="260" width="81" height="20" uuid="e849ad19-140b-4b03-96f3-505f6c61bbcc"/>
+				<textFieldExpression><![CDATA[$F{impuestopatente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="280" width="119" height="20" uuid="49491aef-9c7c-43d6-ac91-292e3af843e1"/>
+				<text><![CDATA[Total Deducciones:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="156" y="280" width="81" height="20" uuid="e33dfcd9-0dc2-47af-acf3-3eadbeb8a61a"/>
+				<textFieldExpression><![CDATA[$F{deducpatente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="300" width="119" height="20" uuid="9553ffc7-3501-45c0-8378-15a3f70dc488"/>
+				<text><![CDATA[Bomberos:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="156" y="300" width="81" height="20" uuid="d3d2bd6f-5f7b-47f7-8f05-bb2c8beed818"/>
+				<textFieldExpression><![CDATA[$F{tasabomberos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="320" width="119" height="20" uuid="b85f66d8-5a6f-4fd1-8aab-323ed412fb1a"/>
+				<text><![CDATA[Tasa de procesamiento:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="156" y="320" width="81" height="20" uuid="26c66a31-b8d7-4e3f-b615-71d7baac0e39"/>
+				<textFieldExpression><![CDATA[$F{tasaprocesamiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="340" width="119" height="20" uuid="2578d051-bd89-4104-be10-3c46661269a1"/>
+				<text><![CDATA[Total patente:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="156" y="340" width="81" height="20" uuid="ed4c1492-f9db-46db-abd7-d05479742b83"/>
+				<textFieldExpression><![CDATA[$F{totalpatente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="313" y="267" width="100" height="20" uuid="f1517940-2403-4146-806f-5ee5b6bb5456"/>
+				<text><![CDATA[Impuesto:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="267" width="100" height="20" uuid="8890c878-9c48-4138-8288-c0d0f61127f4"/>
+				<textFieldExpression><![CDATA[$F{impuestoxmil}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="313" y="287" width="100" height="20" uuid="1cf07d6a-71ef-46ca-8e87-92c5f5e008d0"/>
+				<text><![CDATA[Tasa de procesamiento:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="287" width="100" height="20" uuid="5e7595b3-bdf0-4050-ba11-8f73fed102b2"/>
+				<textFieldExpression><![CDATA[$F{tasaproxmil}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="313" y="307" width="100" height="20" uuid="92996714-94ae-42fb-a92a-f41a926c7a2b"/>
+				<text><![CDATA[Recargos:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="307" width="100" height="20" uuid="fc24c949-1144-4d1c-9fee-3e7bca875d70"/>
+				<textFieldExpression><![CDATA[$F{valxmilrecargos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="313" y="327" width="100" height="20" uuid="a27c9826-86ce-4120-ba20-8444dd1c7e83"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="327" width="100" height="20" uuid="fd4e33ab-e34a-475e-a3c1-b13e20501f02"/>
+				<textFieldExpression><![CDATA[$F{totalvalxmil}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Opaque" x="26" y="227" width="224" height="31" backcolor="#CCCCCC" uuid="83f2fc76-b6b8-4bcb-a17b-bc6c25658991"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Opaque" x="302" y="227" width="224" height="31" backcolor="#CCCCCC" uuid="9c75ef9a-f06a-492f-abfc-a534bc4f4972"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="374" y="233" width="100" height="20" uuid="f4f93973-520b-412c-9d7e-55420d0cfc50"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.5 POR MIL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="232" width="100" height="20" uuid="a212ec94-3aa3-47fe-bcda-2c5a4c3d8739"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PATENTE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="26" y="259" width="1" height="108" uuid="7ae4c36f-7644-4b58-8eeb-74578968b079"/>
+			</line>
+			<line>
+				<reportElement x="26" y="367" width="223" height="1" uuid="5f2c8e85-aa55-40ea-aa31-cf033c642601"/>
+			</line>
+			<line>
+				<reportElement x="249" y="259" width="1" height="109" uuid="0f7b5119-e21d-4cef-8161-3b07391af2d1"/>
+			</line>
+			<line>
+				<reportElement x="301" y="259" width="1" height="108" uuid="f16cf615-4f10-484b-81f0-4ab68ccdd9c8"/>
+			</line>
+			<line>
+				<reportElement x="526" y="259" width="1" height="107" uuid="a6327af4-ca0f-44c9-973b-6f6ca4b9fdaf"/>
+			</line>
+			<line>
+				<reportElement x="302" y="366" width="224" height="1" uuid="a7c5b89b-736f-41bf-9562-4f0c3d8cd564"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
